@@ -1,0 +1,1102 @@
+@charset "utf-8";
+/* CSS Document */
+#pageTxt {
+  padding: 20px;
+}
+#flowList {
+  counter-reset: flowNum;
+  margin-bottom: 40px;
+}
+#flowList li {
+  counter-increment: flowNum;
+}
+#flowList li:nth-of-type(odd) {
+  background: #f6f6f6;
+}
+#flowList li div {
+  position: relative;
+  padding: 20px 20px 20px 85px;
+}
+#flowList li div:after {
+  content: "";
+  width: 4px;
+  height: 100%;
+  background: #ebebeb;
+  position: absolute;
+  left: 43px;
+  bottom: 0;
+}
+#flowList li:first-of-type div:after {
+  height: 60%;
+}
+#flowList li:last-of-type div:after {
+  height: 30%;
+  bottom: auto;
+  top: 0;
+}
+#flowList li div:before {
+  content: counter(flowNum);
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background: #2e8466;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-family: futura-pt-bold, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  z-index: 3;
+}
+#flowList li h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+#exCase, #optionPlan {
+  border-top: solid 1px #a6a6a6;
+  padding: 40px 20px;
+}
+#exCase ul li {
+  background: #f6f6f6;
+  border-radius: 5px;
+  padding: 30px 20px 20px 20px;
+  margin-bottom: 20px;
+}
+#exCase ul li:last-of-type {
+  margin-bottom: 0;
+}
+#exCase ul li .ph img {
+  width: 160px;
+  height: auto;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+#exCase ul li h3 {
+  padding: 30px 0 0 0;
+  font-weight: bold;
+  color: #2e8466;
+}
+#exCase ul li .name {
+  margin-bottom: 20px;
+}
+.subTit {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.subTit span {
+  background: #000;
+  color: #fff;
+  border-radius: 40px;
+  font-size: 14px;
+  padding: 5px 10px;
+}
+.subTit + p {
+  margin-bottom: 40px;
+}
+#price {
+  padding: 20px;
+}
+#price .tax {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+#price li {
+  border: solid 1px #b2b2b2;
+  border-radius: 5px;
+  padding: 30px 10px 10px 10px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+#price li:before {
+  content: "";
+  position: absolute;
+  right: -100px;
+  top: -20px;
+  width: 200px;
+  height: 80px;
+  transform: rotate(45deg);
+}
+#price li:after {
+  position: absolute;
+  right: 0;
+  top: 15px;
+  font-size: 14px;
+  color: #fff;
+  transform: rotate(45deg);
+}
+#price li:nth-of-type(2) {
+  border: solid 2px #318868;
+}
+#price li:nth-of-type(2):before {
+  background: #318868;
+}
+#price li:nth-of-type(2):after {
+  content: "おすすめ";
+}
+#price li:nth-of-type(2) h3 span {
+  border: solid 1px #318868;
+}
+#price li:nth-of-type(2) h3, #price li:nth-of-type(2) .price, #price li:nth-of-type(2) .info, #price li:nth-of-type(2) dd span.limit {
+  color: #318868;
+}
+#price li:nth-of-type(3):after {
+  content: "新登場";
+}
+#price li:nth-of-type(3) {
+  border: solid 2px #ff9ac5;
+}
+#price li:nth-of-type(3):before {
+  background: #ff9ac5;
+}
+#price li:nth-of-type(3) h3 span {
+  border: solid 1px #ff9ac5;
+}
+#price li:nth-of-type(3) h3, #price li:nth-of-type(3) .price, #price li:nth-of-type(3) .info, #price li:nth-of-type(3) dd span.limit {
+  color: #ff9ac5;
+}
+#price li h3 {
+  text-align: center;
+  font-size: 24px;
+}
+#price li h3 span {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  font-size: 16px;
+  border: solid 1px #b2b2b2;
+  border-radius: 3px;
+  font-weight: normal;
+}
+#price li .price {
+  text-align: center;
+  margin-bottom: 20px;
+}
+#price li .price span {
+  font-size: 28px;
+  font-weight: bold;
+}
+#price li .price span.noInclude {
+  display: block;
+  font-size: 14px;
+  color: #717171;
+  line-height: 1;
+}
+#price li .info {
+  text-align: center;
+  color: #b90000;
+  margin-bottom: 20px;
+}
+#price li .info br {
+  display: none;
+}
+#price li dt {
+  padding: 10px 0;
+}
+#price li dt br {
+  display: none;
+}
+#price li dt span {
+  font-size: 14px;
+  display: block;
+}
+#price li dd {
+  text-align: right;
+  border-bottom: dotted 1px #bbb;
+  padding: 0 0 10px 0;
+}
+#price li dd span {
+  font-size: 20px;
+  font-weight: bold;
+}
+#price li dd span.limit {
+  font-size: 16px;
+  font-weight: normal;
+}
+#price li dd.infoTit {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+#price li dd.infoTxt {
+  padding: 10px 0;
+}
+#price li dd.infoTxt p {
+  background: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+#price li dd:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+#price li dd .include:after {
+  content: "";
+  background: url("../img/shared/ico_price_check.svg")center center no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 5px 5px;
+}
+#price li dd .include.not:after {
+  background: url("../img/shared/ico_price_not.svg")center center no-repeat;
+}
+#optionPrice {
+  border: solid 1px #b2b2b2;
+  border-radius: 5px;
+  padding: 30px 20px;
+}
+#calendar {
+  border: none;
+  border-radius: 0;
+  padding: 30px 0 0 0;
+}
+#optionPrice .info {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: solid 1px #b2b2b2;
+}
+#optionPrice .info h3 {
+  text-align: center;
+  font-size: 24px;
+}
+#optionPrice .info h3 span {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  font-size: 16px;
+  border: solid 1px #b2b2b2;
+  border-radius: 3px;
+  font-weight: normal;
+}
+#optionPrice .info .price {
+  text-align: center;
+	margin: 15px 0;
+	line-height: 1.4;
+}
+#optionPrice .info .price:nth-of-type(2){
+	color: #000;
+	border-top: dotted 1px #bbb;
+	padding-top: 15px;
+}
+#optionPrice .info .price:nth-of-type(2) span{
+	color: #298064;
+}
+#optionPrice .info .price span {
+  font-size: 28px;
+  font-weight: bold;
+}
+#optionPrice .info .price + p {
+  text-align: center;
+  color: #b90000;
+}
+#optionPrice .info .bank {
+  background: #efefef;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+#optionPrice ol li img {
+  width: 100px;
+  height: auto;
+  margin: 0 auto 10px auto;
+  display: block;
+}
+#optionPrice ol li h3 {
+  text-align: center;
+  color: #318868;
+  margin-bottom: 10px;
+}
+#optionPrice ol li {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  position: relative;
+}
+#optionPrice ol li:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+#optionPrice ol li:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #b2b2b2 transparent transparent transparent;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -5px;
+}
+#optionPrice ol li span {
+  color: #b90000;
+}
+#optionPrice ol li:last-of-type:after {
+  display: none;
+}
+#faq {
+  padding: 40px 20px;
+  counter-reset: faqNum;
+}
+#faq dt {
+  counter-increment: faqNum;
+  margin-bottom: 10px;
+  position: relative;
+  color: #2e8466;
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 70px;
+}
+#faq dt:before {
+  content: "Q"counter(faqNum);
+  background: #2e8466;
+  color: #fff;
+  padding: 0 15px;
+  border-radius: 3px;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#faq dt:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-color: transparent transparent transparent #2e8466;
+  position: absolute;
+  left: 55px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#faq dd {
+  margin-bottom: 60px;
+  background: #f6f6f6;
+  padding: 20px;
+  border-radius: 3px;
+}
+#contactTop {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+#contactTop > p {
+  margin-bottom: 20px;
+}
+#contactTop #tel a {
+  font-family: futura-pt-bold, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 32px;
+  padding-left: 25px;
+  display: block;
+  background: url("../img/shared/ico_tel.svg")left center no-repeat;
+  background-size: 20px auto;
+  line-height: 1.2;
+}
+#contactTop #tel p span {
+  background: #000;
+  color: #fff;
+  margin-left: 5px;
+  font-size: 14px;
+  padding: 2px 10px;
+}
+#contact {
+  padding: 40px 20px 20px 20px;
+	border-top: solid 1px #ebebeb;
+}
+#contact #error {
+  border: solid 4px #f00;
+  margin-bottom: 20px;
+  padding: 20px;
+  color: #f00;
+  font-weight: bold;
+}
+#contact dt {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  position: relative;
+  padding-left: 10px;
+}
+#contact dt span {
+  background: #f00;
+  color: #fff;
+  font-size: 14px;
+  padding: 1px 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#contact dt:before {
+  content: "";
+  background: #318868;
+  width: 2px;
+  height: 60%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#contact dd {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: dotted 1px #bbb;
+}
+#contact dd li {
+  margin-bottom: 20px;
+}
+#contact dd li:last-of-type {
+  margin-bottom: 0;
+}
+#contact dd.address select:first-of-type {
+  margin-bottom: 10px;
+}
+#contact dd.date {
+  display: flex;
+}
+#contact dd.date select:first-of-type {
+  margin-right: 4%;
+}
+#contact dd.num input {
+  width: 40%;
+  margin: 0 10px;
+}
+#contact .conf dt {
+  font-size: 16px;
+  color: #999;
+}
+#contact .conf dd {
+  font-size: 18px;
+}
+.formBtn{
+	padding: 20px 20px 40px 20px;
+}
+.formBtn .backBtn {
+  margin-top: 20px;
+}
+#contact h2 {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 22px;
+  color: #ff8400;
+}
+#contact.thanks{
+	padding:20px 20px 40px 20px;
+	border-top: none;
+}
+#adopt{
+	padding: 0 20px 40px 20px;
+}
+#adopt li{
+	font-family:  vdl-logona, sans-serif;
+	font-weight: bold;
+	font-style: normal;
+	background: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+#adopt li:before{
+	content: "";
+	width: 5px;
+	height: 5px;
+	background: #2e8466;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+#application .priceBox{
+	background: #f7f7f7;
+	border-radius: 5px;
+	padding: 20px;
+}
+#application .priceBox h3{
+	text-align: center;
+	font-weight: bold;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+#application .priceBox .price li:last-of-type{
+	margin-bottom: 0;
+}
+#application .info{
+	padding: 40px 0;
+}
+#application .info span{
+	font-weight: bold;
+	color: #298064;
+}
+#calendar table{
+	width: 100%;
+}
+#calendar thead{
+	display: none;
+}
+#calendar tbody tr{
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+	background: #f7f7f7;
+	border-radius: 5px;
+}
+#calendar tbody tr td{
+	width: 50%;
+	padding: 10px;
+}
+#calendar tbody tr td:first-of-type{
+	width: 100%;
+	text-align: center;
+	padding:10px 0 0 0;
+	font-size: 20px;
+}
+#calendar tbody tr td:first-of-type span{
+	font-size: 14px;
+}
+#calendar tbody tr td button{
+	border: none;
+	-webkit-appearance: none;
+   -moz-appearance: none;
+        appearance: none;
+	width: 100%;
+	font-size: 16px;
+	padding: 10px;
+	border-radius: 5px;
+	color: #fff;
+	font-weight: bold;
+}
+#calendar tbody tr td button span{
+	background: #fff;
+	display: inline-block;
+	padding: 0 8px;
+	border-radius: 3px;
+	margin: 0 5px;
+	font-size: 28px;
+}
+#calendar tbody tr td button.normal{
+	background: rgb(226,142,62);
+background: linear-gradient(0deg, rgba(226,142,62,1) 0%, rgba(232,184,85,1) 100%);
+}
+#calendar tbody tr td button.normal span{
+	color: #e39341;
+}
+#calendar tbody tr td button.member{
+	background: rgb(42,129,101);
+background: linear-gradient(0deg, rgba(42,129,101,1) 0%, rgba(91,166,142,1) 100%);
+}
+#calendar tbody tr td button.member span{
+	color: #2c8367;
+}
+#calendar tbody tr td button:disabled{
+	background: rgb(166,166,166);
+background: linear-gradient(0deg, rgba(166,166,166,1) 0%, rgba(214,214,214,1) 100%);
+	opacity: 0.3;
+}
+#calendar tbody tr td button:disabled span{
+	color: #8f8f8f;
+}
+#calendar .moreLoad{
+	margin-bottom: 20px;
+}
+#calendar .moreLoad p{
+	border: solid 1px #e3e3e3;
+	border-radius: 5px;
+	text-align: center;
+	padding: 10px;
+	font-weight: bold;
+  box-shadow: -1.176px -1.618px 4px 0px rgba(255, 255, 255, 0.004),0.574px 0.819px 5px 0px rgba(0, 0, 0, 0.14);
+}
+#calendar .moreLoad p:after{
+	content: "";
+	background:url("../img/price/ico_more.svg")center center no-repeat;
+	width: 14px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+.contactTel{
+	border-top: solid 1px #efefef;
+	padding: 20px 0;
+}
+.contactTel h3{
+	font-weight: bold;
+	text-align: center;
+}
+@media screen and (min-width: 1080px) {
+  #pageTxt {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+  #flowList {
+    margin-bottom: 60px;
+  }
+  #flowList li div {
+    padding: 35px 0 35px 80px;
+    width: 1080px;
+    margin: 0 auto;
+  }
+  #flowList li div:after {
+    left: 28px;
+  }
+  #flowList li div:before {
+    width: 60px;
+    height: 60px;
+    left: 0;
+    top: 35px;
+  }
+  #flowList li h2 {
+    font-size: 24px;
+  }
+  #exCase {
+    padding: 60px 0;
+  }
+  #exCase ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #exCase ul li {
+    width: 49%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+  }
+  #exCase ul li:nth-of-type(even) {
+    margin-right: 0;
+  }
+  #exCase ul li:last-of-type {
+    margin-bottom: 2%;
+  }
+  #exCase ul li .ph {
+    float: right;
+    margin: 0 0 20px 20px;
+  }
+  #exCase ul li h3 {
+    font-size: 20px;
+    padding: 0;
+  }
+  .subTit {
+    font-size: 28px;
+  }
+  .subTit + p {
+    margin-bottom: 40px;
+  }
+  #price {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 20px 0 80px 0;
+    display: flex;
+  }
+  #price .tax {
+    font-size: 16px;
+  }
+  #price li {
+    width: 32%;
+    margin-right: 2%;
+    padding: 50px 15px 20px 15px;
+    margin-bottom: 0;
+    box-sizing: border-box;
+  }
+  #price li:last-of-type {
+    margin-right: 0;
+  }
+  #price li h3 {
+    font-size: 24px;
+  }
+  #price li h3 span {
+    margin-bottom: 10px;
+  }
+  #price li .price {
+    font-weight: bold;
+  }
+  #price li .price span {
+    font-size: 32px;
+  }
+  #price li .info br {
+    display: block;
+  }
+  #price li dl {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #price li dt {
+    width: 48%;
+    padding: 10px 0;
+    border-bottom: dotted 1px #bbb;
+  }
+  #price li dt br {
+    display: block;
+  }
+  #price li dt span {
+    font-size: 14px;
+    display: block;
+  }
+  #price li dd {
+    width: 52%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: dotted 1px #bbb;
+    padding: 10px 0;
+  }
+  #price li dd span {
+    font-size: 26px;
+  }
+  #price li dd span.limit {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+  }
+  #price li dt.infoTit {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  #price li dd.infoTxt {
+    width: 100%;
+  }
+  #optionPrice {
+    display: flex;
+    padding: 20px;
+  }
+  #calendar {
+    display: block;
+    padding: 30px 0 0 0;
+  }
+  #optionPrice .info {
+    width: 300px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+    margin-right: 30px;
+  }
+  #optionPrice .info h3 {
+    text-align: center;
+    font-size: 24px;
+  }
+  #optionPrice .info h3 span {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  #optionPrice .info .price span {
+    font-size: 32px;
+  }
+  #optionPrice ol {
+    border-left: solid 1px #b2b2b2;
+    display: flex;
+    width: calc(100% - 300px);
+    padding-left: 30px;
+  }
+  #optionPrice ol li {
+    width: 22%;
+    margin-right: 4%;
+    padding-top: 40px;
+  }
+  #optionPrice ol li:last-of-type {
+    margin-right: 0;
+  }
+  #optionPrice ol li img {
+    width: 65px;
+  }
+  #optionPrice ol li {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  #optionPrice ol li:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 8px;
+    border-color: transparent transparent transparent #b2b2b2;
+    position: absolute;
+    left: auto;
+    right: -8px;
+    transform: none;
+    bottom: 70%;
+  }
+  #faq {
+    padding: 20px 0;
+  }
+  #faq dt {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  #contactTop {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 60px 0;
+    display: flex;
+  }
+  #contactTop > p {
+    margin-bottom: 0;
+    width: 440px;
+    margin-right: 140px;
+  }
+  #contactTop #tel {
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  #contactTop #tel a {
+    font-size: 44px;
+    padding-left: 35px;
+    background-size: 30px auto;
+  }
+  #contactTop #tel a:hover {
+    opacity: 0.6;
+    color: #2e8466;
+  }
+  #contactTop #tel p {
+    margin-left: 10px;
+    line-height: 1.2;
+  }
+  #contactTop #tel p span {
+    display: block;
+    margin-left: 0;
+    padding: 3px 10px;
+  }
+  #contact #error {
+    margin-bottom: 40px;
+  }
+	#contact{
+		padding: 0;
+		border-top: none;
+	}
+  #contact dl {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: dotted 1px #bbb;
+    border-bottom: dotted 1px #bbb;
+    margin-bottom: 60px;
+  }
+  #contact dt {
+    width: 30%;
+    margin-bottom: 0;
+    font-size: 18px;
+    padding: 30px 20px;
+    background: #efefef;
+    border-bottom: dotted 1px #bbb;
+	  box-sizing: border-box;
+  }
+  #contact dt span {
+    right: 20px;
+    top: 30px;
+  }
+  #contact dt:before {
+    height: 100%;
+  }
+  #contact dd {
+    width: 70%;
+    margin-bottom: 0;
+    padding: 20px;
+	  box-sizing: border-box;
+  }
+	#contact dd.setDate{
+		padding: 30px 20px;
+		font-size: 18px;
+		font-weight: bold;
+	}
+  #contact dd ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #contact dd li {
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+  }
+  #contact dd li:nth-of-type(3n) {
+    margin-right: 0;
+  }
+  #contact dd li:nth-of-type(3) ~ li {
+    margin-bottom: 0;
+  }
+  #contact dd.address select {
+    margin-bottom: 0;
+    width: 40%;
+  }
+  #contact dd.date select {
+    width: 30%;
+  }
+  #contact dd.date select:first-of-type {
+    margin-right: 2%;
+  }
+  #contact dd.num input {
+    width: 20%;
+    margin: 0 10px;
+  }
+  .formBtn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+	  padding: 0 0 60px 0;
+  }
+  .formBtn li {
+    width: 48%;
+  }
+  .formBtn li input {
+    padding: 20px;
+    font-size: 20px;
+  }
+  #contact .conf dt {
+    font-size: 16px;
+    color: #999;
+  }
+  #contact .conf dd {
+    padding: 28px 20px;
+    font-size: 18px;
+  }
+  .formBtn .backBtn {
+    margin-top: 0;
+  }
+  .formBtn li:nth-of-type(2) {
+    width: 20%;
+    margin-right: 5%;
+  }
+  #contact h2 {
+    text-align: left;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    font-size: 34px;
+  }
+  #contact .thanksTxt {
+    font-size: 18px;
+  }
+#contact.thanks{
+	min-height:calc(100vh - 490px);
+	padding:40px 20px 60px 20px;
+	border-top: none;
+}
+#adopt{
+	padding: 0 0 80px 0;
+}
+	#adopt ul{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	#adopt ul li{
+		margin: 0 20px 20px 0;
+	}
+	#application{
+		width: 1080px;
+		margin: 0 auto;
+	}
+#application .priceBox{
+	display: flex;
+	align-items: center;
+}
+#application .priceBox h3{
+	width: 40%;
+	text-align: left;
+	font-size: 26px;
+	padding-left: 20px;
+	margin-bottom: 0;
+}
+	#application .priceBox .price{
+		width: 60%;
+	}
+#application .priceBox .price li{
+	margin-bottom: 0 !important;
+}
+#application .info{
+	font-size: 18px;
+}
+#application .price li h5 {
+    font-size: 18px;
+    padding: 0;
+  }
+#application .price li p {
+    padding: 5px;
+    font-size: 20px;
+  }
+#application .price li p span {
+  font-size: 26px;
+}
+#calendar thead{
+	display: block;
+}
+	#calendar thead tr{
+		display: flex;
+	}
+	#calendar thead th{
+		padding: 10px 0;
+		font-size: 18px;
+		width: 220px;
+		text-align: center;
+	}
+	#calendar thead th:first-of-type{
+		width: 580px;
+		text-align: left;
+	}
+	#calendar thead th:nth-of-type(2){
+		margin-right: 40px;
+	}
+	#calendar thead th:last-of-type{
+		color: #298064;
+	}
+#calendar tbody tr{
+	border-top: solid 1px #efefef;
+	margin-bottom: 0;
+	background: none;
+	border-radius: 0;
+	align-items: center;
+}
+#calendar tbody tr td{
+		width: 220px;
+	padding: 20px 0;
+}
+#calendar tbody tr td:nth-of-type(2){
+		margin-right: 40px;
+	}
+#calendar tbody tr td:first-of-type{
+	width: 580px;
+	text-align:left;
+	padding:0;
+	font-size: 24px;
+}
+#calendar tbody tr td:first-of-type span{
+	font-size: 18px;
+}
+#calendar tbody tr td button{
+	cursor: pointer;
+	transition: all 0.3s;
+}
+	#calendar tbody tr td button:hover{
+		opacity: 0.6;
+	}
+	#calendar tbody tr td button:disabled{
+	cursor: auto;
+	}
+#calendar tbody tr td button:disabled:hover{
+	opacity: 0.3;
+}
+#calendar .moreLoad{
+	margin-bottom: 20px;
+	border-top:solid 1px #efefef;
+	padding: 40px 0 0 0;
+}
+#calendar .moreLoad p{
+	width: 300px;
+	margin: 0 auto;
+	padding:15px 10px;
+	font-size: 18px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+	#calendar .moreLoad p:hover{
+		opacity: 0.6;
+	}
+}

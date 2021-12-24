@@ -1,0 +1,462 @@
+@charset "utf-8";
+/*
+	Description: initial setting
+	Version: 1.0
+	Author: idealgrow
+*/
+/*
+===== 1: universal reset =================================
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#wrapper.fix {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+}
+/*
+===== 2: body and base setting ===========================
+*/
+html {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+body {
+  font-family: futura-pt, 'Noto Sans JP', "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0px;
+  padding: 0px;
+  color: #000;
+  font-weight: 500;
+  -webkit-text-size-adjust: 100%;
+}
+body.fixed{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.ftMedium{
+font-family: futura-pt, sans-serif;
+font-weight: 500;
+font-style: normal;
+}
+.ftDemi{
+font-family: futura-pt, sans-serif;
+font-weight: 600;
+font-style: normal;
+}
+.ftBold{
+font-family: futura-pt-bold, sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+
+/*
+===== margin setting ====
+*/
+.mt00 {
+  margin-top: 0 !important;
+}
+.mt05 {
+  margin-top: 5px !important;
+}
+.mt10 {
+  margin-top: 10px !important;
+}
+.mt12 {
+  margin-top: 12px !important;
+}
+.mt15 {
+  margin-top: 15px !important;
+}
+.mt20 {
+  margin-top: 20px !important;
+}
+.mt25 {
+  margin-top: 25px !important;
+}
+.mt30 {
+  margin-top: 30px !important;
+}
+.mt35 {
+  margin-top: 35px !important;
+}
+.mt40 {
+  margin-top: 40px !important;
+}
+.mt45 {
+  margin-top: 45px !important;
+}
+.mt50 {
+  margin-top: 50px !important;
+}
+.mt60 {
+  margin-top: 60px !important;
+}
+.mr00 {
+  margin-right: 0 !important;
+}
+.mr05 {
+  margin-right: 5px !important;
+}
+.mr10 {
+  margin-right: 10px !important;
+}
+.mr12 {
+  margin-right: 12px !important;
+}
+.mr15 {
+  margin-right: 15px !important;
+}
+.mr20 {
+  margin-right: 20px !important;
+}
+.mr25 {
+  margin-right: 25px !important;
+}
+.mr30 {
+  margin-right: 30px !important;
+}
+.mr35 {
+  margin-right: 35px !important;
+}
+.mr40 {
+  margin-right: 40px !important;
+}
+.mr45 {
+  margin-right: 45px !important;
+}
+.mr50 {
+  margin-right: 50px !important;
+}
+.mr65 {
+  margin-right: 65px !important;
+}
+.mr95 {
+  margin-right: 95px !important;
+}
+.mb00 {
+  margin-bottom: 0 !important;
+}
+.mb05 {
+  margin-bottom: 5px !important;
+}
+.mb10 {
+  margin-bottom: 10px !important;
+}
+.mb12 {
+  margin-bottom: 12px !important;
+}
+.mb15 {
+  margin-bottom: 15px !important;
+}
+.mb20 {
+  margin-bottom: 20px !important;
+}
+.mb25 {
+  margin-bottom: 25px !important;
+}
+.mb30 {
+  margin-bottom: 30px !important;
+}
+.mb35 {
+  margin-bottom: 35px !important;
+}
+.mb40 {
+  margin-bottom: 40px !important;
+}
+.mb45 {
+  margin-bottom: 45px !important;
+}
+.mb50 {
+  margin-bottom: 50px !important;
+}
+.mb60 {
+  margin-bottom: 60px !important;
+}
+.ml00 {
+  margin-left: 0 !important;
+}
+.ml05 {
+  margin-left: 5px !important;
+}
+.ml10 {
+  margin-left: 10px !important;
+}
+.ml12 {
+  margin-left: 12px !important;
+}
+.ml15 {
+  margin-left: 15px !important;
+}
+.ml20 {
+  margin-left: 20px !important;
+}
+.ml25 {
+  margin-left: 25px !important;
+}
+.ml30 {
+  margin-left: 30px !important;
+}
+.ml35 {
+  margin-left: 35px !important;
+}
+.ml40 {
+  margin-left: 40px !important;
+}
+.ml45 {
+  margin-left: 45px !important;
+}
+.ml50 {
+  margin-left: 50px !important;
+}
+/*
+===== font setting ====
+*/
+.txtalc {
+  text-align: center;
+}
+.ita {
+  font-style: italic;
+}
+.bold {
+  font-weight: bold;
+}
+.rb {
+  color: #F00;
+  font-weight: bold;
+}
+.reds {
+  color: #F00;
+  font-size: 80%;
+}
+.fzss {
+  font-size: 50%;
+}
+.fzs {
+  font-size: 65%;
+}
+.fsms {
+  font-size: 75%;
+}
+.fzm {
+  font-size: 80%;
+}
+.fzml {
+  font-size: 90%;
+}
+.fzmll {
+  font-size: 100%;
+}
+.fzl {
+  font-size: 110%;
+}
+.fzll {
+  font-size: 120%;
+}
+.fzxl {
+  font-size: 130%;
+}
+/* general params
+--------------------*/
+h1, h2, h3, h4, h5, h6, p, pre, ul, ol, dl, dt, dd, address, blockquote {
+  padding: 0; /* margin&padding reset */
+  line-height: 1.8;
+  display: block;
+  margin: 0px;
+  font-weight: normal;
+  color: #333;
+  box-sizing: border-box;
+}
+div, ul, li, p, a, dl, dt, dd, span, input, select, textarea {
+  box-sizing: border-box;
+}
+form
+hr, .areaAnchor, .anchor {
+  display: none;
+}
+img {
+  border: none; /* img do not want a border */
+  display: block;
+}
+li {
+  list-style: none;
+} 
+
+form {
+  padding: 0; /* margin&padding reset */
+  margin: 0px;
+}
+::-ms-clear {
+  visibility: hidden
+}
+::-ms-reveal {
+  visibility: hidden
+}
+input::placeholder {
+  color: #bbb;
+}
+input:-ms-input-placeholder {
+  color: #bbb;
+}
+input::-ms-input-placeholder {
+  color: #bbb;
+}
+select {
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 10px;
+  border-radius: 3px;
+  border: solid 1px #ddd;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("../img/shared/ico_select.png") right 10px center no-repeat, #fff;
+  background-size: 16px auto, 100%;
+}
+input[type="submit"], input[type="button"] {
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+input[type="text"], input[type="password"], input[type="tel"], input[type="email"], textarea {
+  width: 100%;
+  line-height: 1.8;
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  padding: 11px 10px;
+  font-size: 16px;
+}
+input {
+  -webkit-appearance: none;
+}
+input[type="text"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="email"]:focus, textarea:focus {
+  background: #f6f6f6;
+  border: solid 1px #005fa4;
+}
+input.error {
+  border: solid 1px #f00;
+  background: #fceaed;
+}
+input[type="checkbox"] {
+  display: none;
+}
+input.baseCheck + label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  display: block;
+  line-height: 1.4;
+	transition: all .1s ease-in;
+}
+input.baseCheck + label::before {
+	content: "";
+	background: #efefef;
+  position: absolute;
+	width: 18px;
+	height: 18px;
+	border-radius: 3px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+input.baseCheck:checked + label,input.baseCheck + label:hover{
+  color: #298064;
+}
+input.baseCheck:checked + label::before {
+	background: #298064;
+}
+input.baseCheck:checked + label::after {
+	content: "";
+	background: url("../img/shared/ico_basecheck.svg")center center no-repeat;
+	background-size: 80%;
+	width: 18px;
+	height: 18px;
+  position: absolute;
+	border-radius: 3px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.baseSubmit {
+  background: #ff8400;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  padding: 13px 15px;
+  position: relative;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  border-bottom: solid 2px #b35d00;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+}
+.baseSubmit:hover {
+  background: #ffad56;
+  border-bottom: solid 2px #ffad56;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+.baseSubmit:disabled {
+  opacity: 0.2;
+  cursor: auto;
+}
+.backBtn {
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+  color: #333;
+  padding: 5px 10px;
+  position: relative;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  border-bottom: solid 2px #888;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+}
+.backBtn:hover {
+  background: #eee;
+  border-bottom: solid 2px #eee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+
+/* link do not want a dot */
+/* acronyms and abbreviations styles 
+-------------------------------------*/
+acronym, abbr {
+  cursor: help;
+}
+/*
+===== 3: link setting ===========================
+*/
+a:link {
+  color: #2e8466;
+  text-decoration: none;
+  transition: all .3s ease;
+}
+a:visited {
+  color: #2e8466;
+  text-decoration: none
+}
+a:hover {
+  color: #99bdb0;
+  text-decoration: none;
+  transition: all .3s ease;
+}
+a:active {
+  color: #99bdb0;
+  text-decoration: none
+}
+a img {
+  transition: all .3s ease;
+  opacity: 1;
+}
+a img:hover {
+  opacity: 0.6;
+  transition: all .3s ease;
+}
