@@ -4,6 +4,7 @@ $data['id'] = $_POST['id'];
 $data['title'] = $_POST['title'];
 $data['text'] = $_POST['text'];
 $data['method'] = $_POST['method'];
+$data['input_flg'] = $_POST['input_flg'];
 ?>
 
 
@@ -99,6 +100,7 @@ $data['method'] = $_POST['method'];
                         <input type="hidden" name="title" value="<?php echo $data['title']; ?>">
                         <input type="hidden" name="text" value="<?php echo $data['text']; ?>">
                         <input type="hidden" name="method" value="<?php echo $data['method']; ?>">
+                        <input type="hidden" name="input_flg" value="<?php echo $data['input_flg']; ?>">
 
                         <div class="form-group">
                             <label>件名</label><br>
@@ -112,6 +114,16 @@ $data['method'] = $_POST['method'];
                         <div class="mb-3">
                             <label>本文</label><br>
                             <label style="white-space:pre-wrap;"><?php echo $data['text']; ?></label>
+                        </div>
+
+                        <div class="form-group">
+                        <label>テンプレート埋め込み : </label>
+                        <?php if($data['input_flg'] == 0):?>
+                        <label>使用しない</label>
+                        <?php else:?>
+                            <label>使用する</label>
+                        <?php endif;?>
+
                         </div>
                         <button type="submit" class="btn btn-primary">変更する</button>
                     </form>

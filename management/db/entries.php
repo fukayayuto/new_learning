@@ -93,16 +93,17 @@ function selectEntry($id){
     return $data;
 }
 
-function updateEntry($entry_id,$status){
+function updateEntry($entry_id,$status,$payment){
     
     $pdo = dbConect();
 
     date_default_timezone_set('Asia/Tokyo');
     $date = date("Y-m-d H:i:s");
 
-    $stmt = $pdo->prepare("UPDATE entries SET  status = :status, updated_at = :updated_at  WHERE  id = :id;");
+    $stmt = $pdo->prepare("UPDATE entries SET  status = :status, payment = :payment, updated_at = :updated_at  WHERE  id = :id;");
         $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
         $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        $stmt->bindValue(':payment', $payment, PDO::PARAM_INT);
         $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
         $res = $stmt->execute();
 
@@ -192,7 +193,6 @@ function updateEntryNumber($count,$name_1,$name_2,$name_3,$name_4,$name_5,$entry
         $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
         $res = $stmt->execute();
 
-    
     $pdo = null;
 
     return $res;
@@ -217,5 +217,168 @@ function updateConfirmStatus($entry_id,$confirm_flg){
     return $res;
 }
 
+function updateClaimStatus($entry_id,$claim_flg){
+    
+    $pdo = dbConect();
+
+    date_default_timezone_set('Asia/Tokyo');
+    $date = date("Y-m-d H:i:s");
+
+    $stmt = $pdo->prepare("UPDATE entries SET  claim_flg = :claim_flg, updated_at = :updated_at  WHERE  id = :id;");
+        $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
+        $stmt->bindValue(':claim_flg', $claim_flg, PDO::PARAM_INT);
+        $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
+        $res = $stmt->execute();
+
+    
+    $pdo = null;
+
+    return $res;
+}
+
+function getEntryFromPaymentFlg($id){
+    
+    $pdo = dbConect();
+    $payment_flg = 1;
+    $status = 1;
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE reservation_id = :id and payment_flg = :payment_flg and status = :status");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':payment_flg', $payment_flg, PDO::PARAM_INT);
+    $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+
+function updateCertificateStatus($entry_id,$certificate){
+    
+    $pdo = dbConect();
+
+    date_default_timezone_set('Asia/Tokyo');
+    $date = date("Y-m-d H:i:s");
+
+    $stmt = $pdo->prepare("UPDATE entries SET  certificate = :certificate, updated_at = :updated_at  WHERE  id = :id;");
+        $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
+        $stmt->bindValue(':certificate', $certificate, PDO::PARAM_INT);
+        $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
+        $res = $stmt->execute();
+
+    
+    $pdo = null;
+
+    return $res;
+}
+
+function getEntryStayDataFromPaymentFlg($id){
+    
+    $pdo = dbConect();
+    $payment_flg = 0;
+    $status = 1;
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE reservation_id = :id and payment_flg = :payment_flg and status = :status");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':payment_flg', $payment_flg, PDO::PARAM_INT);
+    $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function getEntryFromConfirmStatus($id){
+    
+    $pdo = dbConect();
+    $status = 1;
+    $payment = 0;
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE reservation_id = :id and status = :status");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function getEntryStayDataFromPayment($id){
+    
+    $pdo = dbConect();
+    $status = 1;
+    $payment = 0;
+
+    $stmt = $pdo->prepare("SELECT * FROM entries WHERE reservation_id = :id and payment <= :payment and status = :status");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':payment', $payment, PDO::PARAM_INT);
+    $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+
+
+function updateEntryPayment($entry_id,$payment){
+    
+    $pdo = dbConect();
+
+    date_default_timezone_set('Asia/Tokyo');
+    $date = date("Y-m-d H:i:s");
+
+    $stmt = $pdo->prepare("UPDATE entries SET payment = :payment, updated_at = :updated_at, payment_date = :payment_date  WHERE  id = :id;");
+        $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
+        $stmt->bindValue(':payment', $payment, PDO::PARAM_INT);
+        $stmt->bindValue(':payment_date', $date, PDO::PARAM_STR);
+        $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
+        $res = $stmt->execute();    
+    $pdo = null;
+
+    return $res;
+}
+
+
+function updateEntryStatus($entry_id,$status){
+    
+    $pdo = dbConect();
+
+    date_default_timezone_set('Asia/Tokyo');
+    $date = date("Y-m-d H:i:s");
+
+    $stmt = $pdo->prepare("UPDATE entries SET status = :status, updated_at = :updated_at  WHERE  id = :id;");
+        $stmt->bindValue(':id', $entry_id, PDO::PARAM_INT);
+        $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        $stmt->bindValue(':updated_at', $date, PDO::PARAM_STR);
+        $res = $stmt->execute();    
+    $pdo = null;
+
+    return $res;
+}
 
 ?>

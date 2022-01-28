@@ -12,6 +12,9 @@ require_once "../db/reservation.php";
 $mail_title = '';
 $mail_text = '';
 $confirm_flg = 0;
+$claim_flg = 0;
+$certificate = 0;
+$mail_template = '';
 $entry_id = 0;
 
 if (!empty($_POST)) {
@@ -28,6 +31,7 @@ if (!empty($_POST)) {
     $data[$k] = $tmp;
   }
   $account_list = mb_substr($account_list, 1);
+  $account_id = $data[0]['account_id'];
 }
 
 if (!empty($_GET['id'])) {
@@ -42,6 +46,7 @@ if (!empty($_GET['id'])) {
   $account_list .= ', ' . $account[0]['company_name'];
   $data[0] = $tmp;
   $account_list = mb_substr($account_list, 1);
+  $account_id = $id;
 }
 
 if (!empty($_GET['confirm'])) {
@@ -76,24 +81,88 @@ if (!empty($_GET['confirm'])) {
   $mail_title = $mailTemplateData['title'];
 
   $search = array('{{会社名}}', '{{予約名}}', '{{開始日}}', '{{開始曜日}}', '{{終了日}}', '{{終了曜日}}', '{{人数}}', '{{講座詳細}}');
-  $replace = array($company_name, $reservation_name, $start_date, $start_week, $end_date, $end_week, $count,$detail);
+  $replace = array($company_name, $reservation_name, $start_date, $start_week, $end_date, $end_week, $count, $detail);
   $mail_template = str_replace($search, $replace, $mail_template);
 
   $data[0]['account_id'] = $account_data[0]['id'];
   $account_list = $account_data[0]['company_name'];
+  $account_id = $account_data[0]['id'];
   $confirm_flg = 1;
 }
 
-if($_GET['entry']){
-  $entry_id = $_GET['entry'];
+
+if(!empty($_GET['claim'])){
+  $entry_id = $_GET['claim'];
 
   $entry_data = selectEntry($entry_id);
-  $account_id = $entry_data['account_id'];
+  $reservation_data = getReservation($entry_data['reservation_id']);
+  $reverve_data = getReservatinData($reservation_data['place']);
 
-  $account_data = getAccount($account_id);
+  $account_data = getAccount($entry_data['account_id']);
+
   $company_name = $account_data[0]['company_name'];
+  $reservation_name = $reverve_data['name'];
+  $tmp_start_date = new DateTime($reservation_data['start_date']);
+  $start_date = $tmp_start_date->format('Y年n月j日');
 
-  //受講証明書メールテンプレート
+  $week = array("日", "月", "火", "水", "木", "金", "土");
+  $start_week = $week[$tmp_start_date->format("w")];
+
+  $progress = (int) $reverve_data['progress'] - 1;
+  $price = $reverve_data['price'];
+  $tmp_end_date = $tmp_start_date->modify('+' . $progress . 'days');
+  $end_date = $tmp_end_date->format('n月j日');
+  $end_week = $week[$tmp_end_date->format("w")];
+
+  $count = $entry_data['count'];
+  $detail = $reverve_data['detail'];
+  $price = $price * $count;
+
+  //確定メールテンプレート
+  $mailTemplateData = getMailTemplate(6);
+
+  $mail_template = $mailTemplateData['text'];
+  $mail_title = $mailTemplateData['title'];
+
+  $search = array('{{会社名}}', '{{予約名}}', '{{開始日}}', '{{開始曜日}}', '{{終了日}}', '{{終了曜日}}', '{{予約人数}}', '{{金額}}','{{講座詳細}}');
+  $replace = array($company_name, $reservation_name, $start_date, $start_week, $end_date, $end_week, $count,$price,$detail);
+  $mail_template = str_replace($search, $replace, $mail_template);
+
+  $data[0]['account_id'] = $account_data[0]['id'];
+  $account_list = $account_data[0]['company_name'];
+  $account_id = $account_data[0]['id'];
+  $claim_flg = 1;
+}
+
+
+if(!empty($_GET['certificate'])){
+  $entry_id = $_GET['certificate'];
+
+  $entry_data = selectEntry($entry_id);
+  $reservation_data = getReservation($entry_data['reservation_id']);
+  $reverve_data = getReservatinData($reservation_data['place']);
+
+  $account_data = getAccount($entry_data['account_id']);
+
+  $company_name = $account_data[0]['company_name'];
+  $reservation_name = $reverve_data['name'];
+  $tmp_start_date = new DateTime($reservation_data['start_date']);
+  $start_date = $tmp_start_date->format('Y年n月j日');
+
+  $week = array("日", "月", "火", "水", "木", "金", "土");
+  $start_week = $week[$tmp_start_date->format("w")];
+
+  $progress = (int) $reverve_data['progress'] - 1;
+  $price = $reverve_data['price'];
+  $tmp_end_date = $tmp_start_date->modify('+' . $progress . 'days');
+  $end_date = $tmp_end_date->format('n月j日');
+  $end_week = $week[$tmp_end_date->format("w")];
+
+  $count = $entry_data['count'];
+  $detail = $reverve_data['detail'];
+  $price = $price * $count;
+
+  //確定メールテンプレート
   $mailTemplateData = getMailTemplate(5);
 
   $mail_template = $mailTemplateData['text'];
@@ -105,9 +174,11 @@ if($_GET['entry']){
 
   $data[0]['account_id'] = $account_data[0]['id'];
   $account_list = $account_data[0]['company_name'];
-
+  $account_id = $account_data[0]['id'];
+  $certificate = 1;
 }
 
+$input_template = getMailTemplateInput();
 
 
 
@@ -123,11 +194,11 @@ if($_GET['entry']){
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
   <link href="dashboard.css" rel="stylesheet">
   <link href="../example.css" rel="stylesheet">
-  <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
-  <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
+  <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
+  <link href='https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
 
-  <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
-  <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
+  <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.js"></script>
+  <script src="https://promote.good-learning.jp/management/fullcalendar-5.10.1/lib/main.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -198,20 +269,30 @@ if($_GET['entry']){
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <!-- <h1 class="h2">Dashboard</h1> -->
           <h1 class="h2">メール作成画面</h1>
-          <form action="post">
-          <button type="submit" class="btn btn-primary">確認画面へ</button>
-          </form>
+
           <div class="text-right">
-          
+            <form action="post">
+              <select name="template" id="template" class="form-control">
+                <option value="0"></option>
+                <?php if (!empty($input_template)) : ?>
+                  <?php foreach ($input_template as $val) : ?>
+                    <option value="<?php echo $val['id'];?>"><?php echo $val['method'];?></option>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </select>
+              <button type="button" id="template_btn" class="btn-secondary">埋め込み</button>
+            </form>
           </div>
         </div>
 
 
-        <div class="container">
+        <div class="container" class="mb-20">
 
-          <form action="confirm.php" method="post">
-            <input type="hidden" id="confirm_flg" name="confirm_flg" value="<?php echo $confirm_flg;?>">
-            <input type="hidden" id="entry_id" name="entry_id" value="<?php echo $entry_id;?>">
+          <form action="confirm.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="confirm_flg" name="confirm_flg" value="<?php echo $confirm_flg; ?>">
+            <input type="hidden" id="claim_flg" name="claim_flg" value="<?php echo $claim_flg; ?>">
+            <input type="hidden" id="entry_id" name="entry_id" value="<?php echo $entry_id; ?>">
+            <input type="hidden" id="certificate" name="certificate" value="<?php echo $certificate; ?>">
 
             <?php foreach ($data as $val) : ?>
               <input type="hidden" name="account_id[]" id="account_id[]" value="<?php echo $val['account_id']; ?> ">
@@ -224,19 +305,21 @@ if($_GET['entry']){
 
             <div class="form-group">
               <label>タイトル</label><br>
-              <input type="text" name="title" id="title" class="form-control" required value="<?php echo $mail_title;?>">
+              <input type="text" name="title" id="title" class="form-control" required value="<?php echo $mail_title; ?>">
             </div>
 
             <div class="form-group">
               <label>メール本文</label><br>
-              <textarea name="mail_text" id="mail_text" rows="22" class="form-control" required><?php echo $mail_template;?></textarea>
+              <textarea name="mail_text" id="mail_text" rows="22" class="form-control" required><?php echo $mail_template; ?></textarea>
             </div>
+
+             
 
             <button type="submit" class="btn btn-primary">確認画面へ</button>
 
           </form>
 
-        </div>
+        </div> 
 
       </main>
     </div>
@@ -263,15 +346,17 @@ if($_GET['entry']){
 
   <script>
     $(function() {
-      $('#btn_template').click(function() {
+      $('#template_btn').click(function() {
 
         const select = $('#template').val();
+        const account_id = <?php echo $account_id;?>;
 
         $.ajax({
           url: 'set.php',
           type: 'POST',
           data: {
-            'select': select
+            'select': select,
+            'account_id': account_id
           }
         }).done(data => {
           const title = data['title'];

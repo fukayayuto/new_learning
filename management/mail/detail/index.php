@@ -8,10 +8,24 @@ if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 }
 
+if (isset($_GET['mail'])) {
+    $mail_id = (int) $_GET['mail'];
+}
+
 $data = array();
 $email_content_data = getEmailContent($id);
 $data['title'] = $email_content_data[0]['title'];
 $data['mail_text'] = $email_content_data[0]['mail_text'];
+
+if (!empty($email_content_data[0]['file_id'])) {
+    $file_id = $email_content_data[0]['file_id'];
+    $file_data_list = getFileNameFromId($file_id);
+    $file_name_list = array();
+    foreach ($file_data_list as $k => $val) {
+        $file_name_list[$k]['file_name'] = $val['file_name'];
+        $file_name_list[$k]['name'] = $val['name'];
+    }
+}
 
 $tmp_start_date = new DateTime($email_content_data[0]['created_at']);
 $data['created_at'] = $tmp_start_date->format('Y年n月j日 G:i');
@@ -35,11 +49,7 @@ $data['account_list'] = mb_substr($data['account_list'], 1);
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
 
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
 
 </head>
 
@@ -127,8 +137,26 @@ $data['account_list'] = mb_substr($data['account_list'], 1);
                         <label>本文</label><br>
                         <label class="border-bottom" style="white-space:pre-wrap;"><?php echo $data['mail_text']; ?></label>
                     </div>
+                    <?php if (!empty($file_data_list)) : ?>
+                        <div class="form-group">
+                            <label>添付ファイル</label><br>
+                            <?php foreach ($file_name_list as $val) : ?>
+                                <a href="/management/common/file/<?php echo $val['file_name']; ?>" target=”_blank”>
+                                    <label class="border-bottom"><?php echo $val['name']; ?></label>
+                                </a>
+                                <br>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+
                     <div class="form-group">
                         <label>送信日時 : <?php echo $data['created_at']; ?></label><br>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label><button type="button" id="del" class="btn-danger">削除する</button></label><br>
                     </div>
 
                 </div>
@@ -158,6 +186,18 @@ $data['account_list'] = mb_substr($data['account_list'], 1);
     <script src="/docs/4.4/assets/js/src/application.js"></script>
     <script src="/docs/4.4/assets/js/src/search.js"></script>
     <script src="/docs/4.4/assets/js/src/ie-emulation-modes-warning.js"></script>
+    <script>
+        $("#del").click(function() {
+            const id = <?php echo $mail_id; ?>;
+
+            if (confirm('こちらのインフォメーションを削除してもよろしいでしょうか？')) {
+                window.location.href = 'https://promote.good-learning.jp/management/mail/detail/delete.php?id=' + id;
+            } else {
+
+            }
+
+        });
+    </script>
 </body>
 
 </html>

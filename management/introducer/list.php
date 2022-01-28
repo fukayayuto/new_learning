@@ -123,7 +123,7 @@ foreach ($introducer_data as $k => $val) {
                                 <tr>
                                     <td><?php echo $val['number']; ?></td>
                                     <td><?php echo $val['name']; ?></td>
-                                    <td><a href="/management/introducer/detail/?id=<?php echo $val['id']; ?>"><button type="button" class="btn btn-primary">実績一覧</button></a></td>
+                                    <td><a href="/management/introducer/detail/?id=<?php echo $val['number']; ?>"><button type="button" class="btn btn-primary">実績一覧</button></a></td>
                                     <td><?php echo $val['email']; ?></td>
                                     <td><?php echo $val['updated_at']; ?></td>
                                 </tr>

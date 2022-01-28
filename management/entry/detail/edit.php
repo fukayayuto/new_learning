@@ -7,7 +7,7 @@ require_once "../../db/entries.php";
 require_once "../../db/accounts.php";
 
 if (empty($_POST['id'])) {
-    header('Location: http://localhost:8888/management/entry');
+    header('Location: https://promote.good-learning.jp/management/entry');
 }
 
 if (!empty($_GET['res'])) {
@@ -50,6 +50,8 @@ $created_at .= '(' . $created_at_week . ') ';
 $created_at .= $tmp_created_at->format('G:i');
 
 $status = $entry_data['status'];
+$payment = $entry_data['payment'];
+$payment_flg = $entry_data['payment_flg'];
 $count = $entry_data['count'];
 $name_list = $entry_data['name_1'];
 $name_1 = $entry_data['name_1'];
@@ -216,81 +218,6 @@ $left_seat = $left_seat + $count;
                         </div>
                         <br>
 
-
-                        <!-- <div class="row">
-                            <div class="col-md-12">
-                                <label for="lastName">予約人数:</label>
-                                <select name="count" id="count" class="form-control">
-                                    <?php
-                                    switch ($left_seat):
-                                        case 1:
-                                    ?>
-                                            <option value="1" <?php if ($count == 1) {
-                                                                    echo 'selected';
-                                                                } ?>>1人</option>
-                                            <?php break; ?>
-                                        <?php
-                                        case 2: ?>
-                                            <option value="1" <?php if ($count == 1) {
-                                                                    echo 'selected';
-                                                                } ?>>1人</option>
-                                            <option value="2" <?php if ($count == 2) {
-                                                                    echo 'selected';
-                                                                } ?>>2人</option>
-                                            <?php break; ?>
-                                        <?php
-                                        case 3: ?>
-                                            <option value="1" <?php if ($count == 1) {
-                                                                    echo 'selected';
-                                                                } ?>>1人</option>
-                                            <option value="2" <?php if ($count == 2) {
-                                                                    echo 'selected';
-                                                                } ?>>2人</option>
-                                            <option value="3" <?php if ($count == 3) {
-                                                                    echo 'selected';
-                                                                } ?>>3人</option>
-                                            <?php break; ?>
-                                        <?php
-                                        case 4: ?>
-                                            <option value="1" <?php if ($count == 1) {
-                                                                    echo 'selected';
-                                                                } ?>>1人</option>
-                                            <option value="2" <?php if ($count == 2) {
-                                                                    echo 'selected';
-                                                                } ?>>2人</option>
-                                            <option value="3" <?php if ($count == 3) {
-                                                                    echo 'selected';
-                                                                } ?>>3人</option>
-                                            <option value="4" <?php if ($count == 4) {
-                                                                    echo 'selected';
-                                                                } ?>>4人</option>
-                                            <?php break; ?>
-                                        <?php
-                                        case 5: ?>
-                                            <option value="1" <?php if ($count == 1) {
-                                                                    echo 'selected';
-                                                                } ?>>1人</option>
-                                            <option value="2" <?php if ($count == 2) {
-                                                                    echo 'selected';
-                                                                } ?>>2人</option>
-                                            <option value="3" <?php if ($count == 3) {
-                                                                    echo 'selected';
-                                                                } ?>>3人</option>
-                                            <option value="4" <?php if ($count == 4) {
-                                                                    echo 'selected';
-                                                                } ?>>4人</option>
-                                            <option value="5" <?php if ($count == 5) {
-                                                                    echo 'selected';
-                                                                } ?>>5人</option>
-                                            <?php break; ?>
-                                    <?php endswitch; ?>
-
-                                </select>
-
-                            </div>
-                        </div>
-                        <br> -->
-
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="lastName">予約者氏名1 : <?php echo $name_1; ?></label>
@@ -397,7 +324,15 @@ $left_seat = $left_seat + $count;
                             </div>
                         </div>
                         <br>
+
                         <div class="row">
+                            <div class="col-md-12">
+                                <label for="lastName">入金金額:</label>
+                                <input class="form-control" type="number" id="payment" name="payment" value="<?php echo $payment;?>">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
                             <div class="col-md-12">
                                 <label for="lastName">予約申込日:<?php echo $created_at; ?></label>
                             </div>

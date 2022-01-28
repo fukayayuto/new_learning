@@ -1,7 +1,6 @@
 <?php
 session_start();
 ob_start();
-ini_set('display_errors', "On");
 require_once "../db/reservation.php";
 require_once "../db/reservation_settings.php";
 require_once "../db/entries.php";
@@ -12,13 +11,12 @@ require_once "../db/name_lists.php";
 require_once "../db/introduce.php";
 
 if(!empty($_SESSION['flg'])){
-  header('Location: http://localhost:8888/truck/price/tmp.php');
+  header('Location: http://localhost:8888/truck/price/');
   exit();
 }
 
-
 if (empty($_POST)) {
-  header('Location: http://localhost:8888/truck/price/tmp.php');
+  header('Location: http://localhost:8888/truck/price/');
   exit();
 }
 
@@ -36,7 +34,7 @@ foreach ($entry_data as $entry) {
   }
 }
 if($left_seat <  $_POST['count']){
-  header('Location: http://localhost:8888/truck/price/tmp.php?res=1');
+  header('Location: http://localhost:8888/truck/price/');
   exit();
 }
 
@@ -160,7 +158,7 @@ if (empty($_SESSION['flg'])) {
 
 
   //メールの作成
-  $mail_to_2  = "yuto.fukaya@cab-station.com";
+  $mail_to_2  = "icts01@cab-station.com";
   $mail_subject_2  = "【グッドラーニング】予約確認メール";
   $mail_header_2  = "from:" . $mail;
 
@@ -171,7 +169,7 @@ if (empty($_SESSION['flg'])) {
 
 
   //メールの作成
-  $mail_to  = "yuto.fukaya@cab-station.com";
+  $mail_to  = "icts01@cab-station.com";
   $mail_subject  = "【グッドラーニング】予約確認メール";
   $mail_header  = "from:" . $mail;
 
@@ -180,8 +178,8 @@ if (empty($_SESSION['flg'])) {
   mb_language("Japanese");
   mb_internal_encoding("UTF-8");
 
-  $mailsousin_1 = mb_send_mail($mail_to_1, $mail_subject_1, $mail_body_1, $mail_header_1);
-  $mailsousin_2 = mb_send_mail($mail_to_2, $mail_subject_2, $mail_body_2, $mail_header_2);
+  // $mailsousin_1 = mb_send_mail($mail_to_1, $mail_subject_1, $mail_body_1, $mail_header_1);
+  // $mailsousin_2 = mb_send_mail($mail_to_2, $mail_subject_2, $mail_body_2, $mail_header_2);
 
 
 

@@ -77,7 +77,7 @@ foreach ($entry as $val) {
 $left_seat = $reservation_total_seat - $used_seat;
 
 if($left_seat <= 0){
-  header('Location: http://localhost:8888/truck/price/tmp.php');
+  header('Location: http://localhost:8888/truck/price/');
   exit();
 }
 

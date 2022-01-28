@@ -6,7 +6,7 @@ require_once "../../db/reservation.php";
 require_once "../../db/entries.php";
 require_once "../../db/accounts.php";
 if (empty($_POST['id'])) {
-    header('Location: http://localhost:8888/management/entry');
+    header('Location: https://promote.good-learning.jp/management/entry');
 }
 $entry_id = $_POST['id'];
 $count = $_POST['count'];
@@ -34,6 +34,6 @@ if(!$res){
 }else{
     $res = 5;
 }
-header('Location: http://localhost:8888/management/entry/detail?id=' . $entry_id . '&res=' . $res);
+header('Location: https://promote.good-learning.jp/management/entry/detail?id=' . $entry_id . '&res=' . $res);
 
 ?>

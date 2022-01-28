@@ -1,10 +1,6 @@
 <?php
 require_once "db/reservation_settings.php";
 
-?>
-
-<?php
-
 $start    = new DateTime('2021-12-28'); // 16/11/02 から
 $end      = new DateTime('2023-03-31'); // 16/11/08 まで
 $interval = new DateInterval('P7D');    // 2日間隔で（最初に P）
@@ -14,7 +10,7 @@ $place = 1;
 
 foreach ($period as $date) {
     $tmp = $date->format('Y-m-d');
-    reseveStore($place,$tmp);
+    // reseveStore($place,$tmp);
 }
 
 // $place = 1;

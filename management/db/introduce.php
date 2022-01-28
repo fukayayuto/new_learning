@@ -58,7 +58,7 @@ function selectIntroducer($introducer_id){
     
     $pdo = dbConect();
 
-    $stmt = $pdo->prepare("SELECT * FROM introducer WHERE id = :introducer_id");
+    $stmt = $pdo->prepare("SELECT * FROM introducer WHERE number = :introducer_id");
     $stmt->bindValue(':introducer_id', $introducer_id, PDO::PARAM_INT);
     $res = $stmt->execute();
 

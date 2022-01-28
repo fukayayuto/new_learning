@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', "On");
 require "../../db/reservation_settings.php";
 require "../../db/reservation.php";
@@ -15,6 +16,11 @@ $name_3 = '';
 $name_4 = '';
 $name_5 = '';
 $count = 1;
+
+$company_name = '';
+$sales_office = '';
+$email = '';
+$phone = '';
 
 if (!empty($_POST['id'])) {
   $reservation_id = $_POST['id'];
@@ -163,6 +169,7 @@ $left_seat = $reservation_total_seat - $used_seat;
             <input type="hidden" name="end_date" id="end_date" value="<?php echo $data['end_date']; ?>">
             <input type="hidden" name="end_week" id="end_week" value="<?php echo $data['end_week']; ?>">
             <input type="hidden" name="left_seat" id="left_seat" value="<?php echo $left_seat; ?>">
+            <input type="hidden" name="introducer_id" id="introducer_id" value="<?php echo $introducer_id; ?>">
 
             <dl>
               <dt>受講名</dt>

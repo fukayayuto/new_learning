@@ -317,6 +317,80 @@ function updateReservation($id,$start_date,$place){
         return $data;
     }
 
+    function getReservationFromMonth($month){
+    
+    $pdo = dbConect();
+    $first_date = date('Y-m-d', strtotime('first day of ' . $month));
+    $last_date = date('Y-m-d', strtotime('last day of ' . $month));
 
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE start_date between :first_date and :last_date ORDER BY start_date");
+    $stmt->bindValue(':first_date', $first_date, PDO::PARAM_STR);
+    $stmt->bindValue(':last_date', $last_date, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function getReservationFromMonthPlace($month, $place){
+    
+    $pdo = dbConect();
+    $first_date = date('Y-m-d', strtotime('first day of ' . $month));
+    $last_date = date('Y-m-d', strtotime('last day of ' . $month));
+
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE start_date between :first_date and :last_date and place = :place ORDER BY start_date");
+    $stmt->bindValue(':first_date', $first_date, PDO::PARAM_STR);
+    $stmt->bindValue(':last_date', $last_date, PDO::PARAM_STR);
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+    $res = $stmt->execute();
+
+    $data = null;
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $pdo = null;
+
+    return $data;
+}
+
+function getReservationAllData(){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings ORDER BY start_date");
+    $res = $stmt->execute();
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = null;
+
+    return $data;
+}
+
+function getReservationAllDataFromPlace($place){
+    
+    $pdo = dbConect();
+
+    $stmt = $pdo->prepare("SELECT * FROM reservation_settings WHERE place = :place ORDER BY start_date");
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
+    $res = $stmt->execute();
+    
+    if( $res ) {
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    $pdo = null;
+
+    return $data;
+}
 
 ?>

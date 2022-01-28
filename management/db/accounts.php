@@ -3,18 +3,17 @@
 require_once "db.php"; 
 require_once "entries.php"; 
 
-function accountStore($email,$compnay_name,$phone,$sales_office){
+function accountStore($email,$company_name,$phone,$sales_office){
     
     $pdo = dbConect();
-
+    
     $stmt = $pdo->prepare("INSERT INTO accounts (
-             email, company_name, sales_office, phone
+                 email, company_name, sales_office, phone
             ) VALUES (
-             :email, :company_name,:sales_office, :phone
+               :email, :company_name,:sales_office, :phone
              )");
-    $date = new DateTime();
     $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-    $stmt->bindValue(':company_name', $compnay_name, PDO::PARAM_STR);
+    $stmt->bindValue(':company_name', $company_name, PDO::PARAM_STR);
     $stmt->bindValue(':sales_office', $sales_office, PDO::PARAM_STR);
     $stmt->bindValue(':phone', $phone, PDO::PARAM_STR);
     $res = $stmt->execute();
@@ -22,7 +21,6 @@ function accountStore($email,$compnay_name,$phone,$sales_office){
     if( $res ) {
         $id = $pdo -> lastInsertId();
     }
-    $pdo = null;
 
     return $id;
 }
@@ -191,6 +189,43 @@ function updateAccountDel($account_id){
     return $res;
 }
 
+function getSearchFromPlace($account_id_list){
+    
+    $pdo = dbConect();
+    $data = array();
+    foreach($account_id_list as $k => $val){
+        $stmt = $pdo->prepare("SELECT * FROM accounts WHERE id = :id" );
+        $stmt->bindValue(':id', $val, PDO::PARAM_INT);
+        $res = $stmt->execute();
+    
+        if( $res ) {
+            $data[$k] = $stmt->fetch();
+        }
+    }
+
+    $pdo = NULL;
+
+    return $data;
+}
+
+
+function accountsStore($email,$company_name,$phone,$sales_office){
+    
+    $pdo = dbConect();
+    
+    $stmt = $pdo->prepare("INSERT INTO accounts (
+                 email, company_name, sales_office, phone
+            ) VALUES (
+               :email, :company_name,:sales_office, :phone
+             )");
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $stmt->bindValue(':company_name', $company_name, PDO::PARAM_STR);
+    $stmt->bindValue(':sales_office', $sales_office, PDO::PARAM_STR);
+    $stmt->bindValue(':phone', $phone, PDO::PARAM_STR);
+    $res = $stmt->execute();
+
+    return $res;
+}
 
 
 

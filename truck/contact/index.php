@@ -25,11 +25,11 @@
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="http://localhost:8888/truck/contact/"
+      content="https://promote.good-learning.jp/truck/contact/"
     />
     <meta
       property="og:image"
-      content="http://localhost:8888/truck/common/img/shared/og_image.jpg"
+      content="https://promote.good-learning.jp/truck/common/img/shared/og_image.jpg"
     />
     <meta
       property="og:site_name"
@@ -41,7 +41,7 @@
     />
     <link
       rel="canonical"
-      href="http://localhost:8888/truck/contact/"
+      href="https://promote.good-learning.jp/truck/contact/"
     />
     <link rel="stylesheet" href="https://use.typekit.net/hcg7pyj.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -133,66 +133,93 @@
                 <dt>お問い合わせ内容<span>必須</span></dt>
                 <dd>
                   <ul>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check01"
-                        name="checkBox[]"
-                        value="すぐに利用したい"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check01">すぐに利用したい</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check02"
-                        name="checkBox[]"
-                        value="システムデモを見たい"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check02">システムデモを見たい</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check03"
-                        name="checkBox[]"
-                        value="体験用ログインIDを発行してほしい"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check03">体験用IDを発行してほしい</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check04"
-                        name="checkBox[]"
-                        value="費用の見積がほしい"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check04">費用の見積がほしい</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check05"
-                        name="checkBox[]"
-                        value="詳しい資料がほしい"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check05">詳しい資料がほしい</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="check06"
-                        name="checkBox[]"
-                        value="その他（質問・ご相談）"
-                        class="baseCheck validate[minCheckbox[1]]"
-                      />
-                      <label for="check06">その他（質問・ご相談）</label>
-                    </li>
+                  <li>
+                     <input
+                       type="checkbox"
+                       id="check01"
+                       name="checkBox[]"
+                       value="すぐに利用したい"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check01">すぐに利用したい</label>
+                   </li>
+                   <li>
+                     <input
+                       type="checkbox"
+                       id="check02"
+                       name="checkBox[]"
+                       value="システムデモを見たい"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check02">システムデモを見たい</label>
+                   </li>
+                  
+                   <li>
+                     <input
+                       type="checkbox"
+                       id="check03"
+                       name="checkBox[]"
+                       value="体験用ログインIDを発行してほしい"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check03">体験用IDを発行してほしい</label>
+                   </li>
+                   <li>
+                     <input
+                       type="checkbox"
+                       id="check08"
+                       name="checkBox[]"
+                       value="年間教育について"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check08">年間教育について</label>
+                   </li>
+                   <li>
+                     <input
+                       type="checkbox"
+                       id="check07"
+                       name="checkBox[]"
+                       value="初任運転者について"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check07">初任運転者について</label>
+                   </li>
+                  
+                   <li>
+                     <input
+                       type="checkbox"
+                       id="check05"
+                       name="checkBox[]"
+                       value="費用の見積がほしい"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check05">費用の見積がほしい</label>
+                   </li>
+                   <li style="margin-top: 18px;">
+                     <input
+                       type="checkbox"
+                       id="check04"
+                       name="checkBox[]"
+                       value="詳しい資料がほしい"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check04">詳しい資料がほしい</label>
+                   </li>
+                   <li style="margin-top: 18px;">
+                     <input
+                       type="checkbox"
+                       id="check06"
+                       name="checkBox[]"
+                       value="その他（質問・ご相談）"
+                       class="baseCheck validate[minCheckbox[1]]"
+                     />
+                     <label for="check06">その他（質問・ご相談）</label>
+                   </li>
+                   <li style="margin-top: 18px;">
+                    
+                   </li>
+                   <input type="checkbox" readonly name="checkBox[]">
+                   <input type="checkbox" readonly name="checkBox[]">
                     <input type="checkbox" readonly name="checkBox[]"><!-- ←エラー表示時のレイアウト崩れを防止するためのダミーcheckbox -->
                   </ul>
                 </dd>

@@ -128,8 +128,7 @@ $count = $reverve_data['count'];
               </div>
             </div>
             <button class="btn btn-secondary" type="button" id="add">さらに作成する</button>
-
-
+           
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>
           </form>

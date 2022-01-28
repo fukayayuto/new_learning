@@ -1,32 +1,23 @@
 <?php
 require_once "db/reservation_settings.php";
-$place = 1;
-$resservation_data = searchReserveLastStartDate($place);
-var_dump($resservation_data);die();
+ini_set('display_errors', "On");
 
-?>
+$place = array();
+$place[0] = 1;
+$place[1] = 2;
+$place[2] = 11;
 
-<?php
 
-// $start    = new DateTime('2021-12-28'); // 16/11/02 から
-// $end      = new DateTime('2023-03-31'); // 16/11/08 まで
-// $interval = new DateInterval('P5D');    // 2日間隔で（最初に P）
+foreach ($place as $val) {
 
-// $period = new DatePeriod($start, $interval, $end); // 順番注意
-// $place = 11;
+    $reservation_data = searchReserveLastStartDate($val);
 
-// foreach ($period as $date) {
-//     $tmp = $date->format('Y-m-d');
-//     reseveStore($place,$tmp);
-// }
+    $start_date = $reservation_data['start_date'];
 
-// $place = 1;
-// for($i = 1; $i <= 100; $i++){
-//     var_dump($date);
-//     // reseveStoreAuto($place,$date);
-//     $num = (int) 7;
-//     $date = $date->modify('+' . $progress . 'days');
+    // $today = date('Y-m-d');
 
-// }
+    $three_month = date('Y-m-d',strtotime('+3 month'));
+    
+}
 
 ?>

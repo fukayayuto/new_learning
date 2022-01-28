@@ -25,6 +25,29 @@ if (!empty($_GET['company_name'])) {
     $account_data = getSearchFromCompanyname($company_name);
 }
 
+if(!empty($_GET['place'])){
+    $count++;
+    $place = $_GET['place'];
+    $account_id_list = array();
+    $i = 0;
+    $reservation_data_list = getSelectAll($place);
+    foreach ($reservation_data_list as $k => $val) {
+        $reservation_id = $val['id'];
+        $entry = getEntry($reservation_id);
+        foreach ($entry as $key => $value) {
+            $account_id_list[$i] = $value['account_id'];
+            $i++;
+        }
+    }
+    $account_id_list = array_unique($account_id_list);
+   
+    $account_data = array();
+    if(!empty($account_id_list)){
+        $account_data = getSearchFromPlace($account_id_list);
+    }
+
+}
+
 if (!empty($_GET['res'])) {
     $res = $_GET['res'];
 }
@@ -198,6 +221,7 @@ if (!empty($data)) {
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <!-- <h1 class="h2">Dashboard</h1> -->
                     <h1 class="h2">顧客一覧</h1>
+                    <a href="/management/account/form.php"><button type="button" class="btn btn-success">新規顧客を作成する</button></a>
                 </div>
 
                 <div class="container">
@@ -205,8 +229,8 @@ if (!empty($data)) {
                     <form action="/management/account" method="get">
                         <input type="text" name="company_name" id="company_name" placeholder="会社名" value="<?php echo $company_name; ?>">
                         <input type="text" name="email" id="email" placeholder="メールアドレス" value="<?php echo $email; ?>">
-                        <!-- <select name="place" id="place" class="form-control">
-                            <option value=""></option>
+                        <select name="place" id="place">
+                            <option value="">会場を選択してください</option>
                             <option value="1" <?php if ($place == 1) {
                                                     echo 'selected';
                                                 } ?>>[ユーザー限定]初任者講習</option>
@@ -216,7 +240,7 @@ if (!empty($data)) {
                             <option value="11" <?php if ($place == 11) {
                                                     echo 'selected';
                                                 } ?>>三重県協会</option>
-                        </select> -->
+                        </select>
                         <button type="submit" class="btn btn-secondary">検索</button>
                     </form>
 
@@ -345,7 +369,13 @@ if (!empty($data)) {
             swal('顧客を削除に失敗しました');
         }
         if (res == 1) {
-            swal('予約を削除しました。');
+            swal('顧客を削除しました。');
+        }
+        if (res == 4) {
+            swal('顧客の作成に失敗しました');
+        }
+        if (res == 3) {
+            swal('顧客作成しました。');
         }
     </script>
 </body>

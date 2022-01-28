@@ -236,9 +236,9 @@ if (!empty($entry)) {
                 <th>予約人数</th>
                 <th>予約会社名</th>
                 <th>ステータス</th>
-                <?php if ($start_date > $today) : ?>
+                <!-- <?php if ($start_date > $today) : ?>
                   <th></th>
-                <?php endif; ?>
+                <?php endif; ?> -->
                 <th></th>
               </tr>
             </thead>
@@ -259,11 +259,14 @@ if (!empty($entry)) {
                     <td><button type="button" class="btn btn-danger">キャンセル</button></td>
                   <?php endif; ?>
 
-                  <?php if ($start_date < $today) : ?>
+                  <!-- <?php if ($start_date < $today) : ?>
                     <?php if (($val['status']) == 1) : ?>
-                      <td><a href="/management/mail/form.php?entry=<?php echo $val['id'];?>"><span data-feather="file-text"></span>受講証明書を送る</a></td>
+                      <td><a href="/management/mail/form.php?entry=<?php echo $val['id']; ?>"><span data-feather="file-text"></span>受講証明書を送る</a></td>
+                    <?php else : ?>
+                      <td></td>
                     <?php endif; ?>
-                  <?php endif; ?>
+
+                  <?php endif; ?> -->
 
                   <td><a href="/management/entry/detail/?id=<?php echo $val['id']; ?>"><button type="button" class="btn btn-primary">詳細</button></a></td>
 

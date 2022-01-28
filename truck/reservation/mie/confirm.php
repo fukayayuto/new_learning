@@ -43,6 +43,7 @@ $data['company_name'] = $_POST['company_name'];
 $data['phone'] = $_POST['phone'];
 $data['sales_office'] = $_POST['sales_office'];
 
+$introducer_id = $_POST['introducer_id'];
 
 ?>
 

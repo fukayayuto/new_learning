@@ -5,10 +5,11 @@ require_once "../../db/reservation.php";
 require_once "../../db/entries.php";
 require_once "../../db/accounts.php";
 if (empty($_POST['id'])) {
-    header('Location: http://localhost:8888/management/entry');
+    header('Location: https://promote.good-learning.jp/management/entry');
 }
 $entry_id = $_POST['id'];
 $status = $_POST['status'];
+$payment = $_POST['payment'];
 
 if ($status != 2) {
     $entry_data = selectEntry($entry_id);
@@ -33,7 +34,7 @@ if ($status != 2) {
 
         if ($left_seat < $count) {
             $res = 7;
-            header('Location: http://localhost:8888/management/entry/detail?id=' . $entry_id . '&res=' . $res);
+            header('Location: https://promote.good-learning.jp/management/entry/detail?id=' . $entry_id . '&res=' . $res);
             exit();
         }
     }
@@ -41,10 +42,10 @@ if ($status != 2) {
 
 
 
-$res = updateEntry($entry_id, $status);
+$res = updateEntry($entry_id, $status,$payment);
 if (!$res) {
     $res = 0;
 } else {
     $res = 1;
 }
-header('Location: http://localhost:8888/management/entry/detail?id=' . $entry_id . '&res=' . $res);
+header('Location: https://promote.good-learning.jp/management/entry/detail?id=' . $entry_id . '&res=' . $res);

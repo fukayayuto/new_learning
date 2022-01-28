@@ -15,6 +15,7 @@ function h($str)
 
 
 $reservation_data = getTomorrowData();
+
 $err = '';
 $end_week = '';
 $end_date = '';
@@ -94,9 +95,6 @@ foreach ($reservation_data as $val) {
 
             $mail_subject_1 = "【初任運転者講習の受講開始】の前日となりました。";
 
-
-
-
             //メール送信処理
             mb_language("Japanese");
             mb_internal_encoding("UTF-8");
@@ -106,7 +104,7 @@ foreach ($reservation_data as $val) {
 
             if (!$res) {
 
-                $mail_to    = "yuto.fukaya@cab-station.com";
+                $mail_to    = "icts01@cab-station.com";
                 $mail_subject    = "予約前日の自動送信に失敗しました";
                 $mail_header    = "from:icts01@cab-station.com";
                 $mail_body = $account_name . "様へのメール送信に失敗しました";

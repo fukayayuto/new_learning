@@ -123,6 +123,19 @@ $data = getMailTemplate($id);
                             <label>本文</label>
                             <textarea class="form-control" name="text" style="height: 100vh;"><?php echo $data['text']; ?></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label class="border-bottom">埋め込みに使用する :
+                                <select name="input_flg" id="input_flg" class="form-control">
+                                    <option value="0" <?php if ($data['input_flg'] == 0) {
+                                                            echo 'selected';
+                                                        } ?>>使用しない</option>
+                                    <option value="1" <?php if ($data['input_flg'] == 1) {
+                                                            echo 'selected';
+                                                        } ?>>使用する</option>
+                                </select>
+                            </label>
+                        </div>
                         <button type="submit" class="btn btn-primary">編集する</button>
                     </form>
                 </div>

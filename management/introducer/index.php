@@ -24,19 +24,28 @@ foreach ($channel_data as $k => $val) {
 
     $entry_id = $val['entry_id'];
     $entry_data = selectEntry($entry_id);
+    $tmp['entry_id'] = $entry_data['id'];
     $tmp['status'] = $entry_data['status'];
+    $tmp['payment'] = $entry_data['payment'];
     $tmp['count'] = $entry_data['count'];
     $reservation_id = $entry_data['reservation_id'];
 
     $reservation_data = getReservation($reservation_id);
     $place = $reservation_data['place'];
-    
+
+    $tmp_date = new DateTime($entry_data['created_at']);
+    $tmp['created_at'] = $tmp_date->format('Y年m月d日');
 
     $reserve_data = getReservatinData($place);
+    $price = $reserve_data['price'];
+    $tmp['price'] = $price * $tmp['count'];
 
     $tmp['reservation_name'] = $reserve_data['name'];
 
-    $tmp['reservation_name'] = mb_substr($tmp['reservation_name'], 0, 23);
+    $tmp['reservation_name'] = mb_substr($tmp['reservation_name'], 0, 15);
+
+    $tmp_date = new DateTime($reservation_data['start_date']);
+    $tmp['start_date_format'] = $tmp_date->format('n月d日');
 
 
     $tmp_date = new DateTime($val['updated_at']);
@@ -67,6 +76,7 @@ foreach ($channel_data as $k => $val) {
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
+
                         <li class="nav-item">
                             <a class="nav-link active" href="/management">
                                 <span data-feather="home"></span>
@@ -116,6 +126,7 @@ foreach ($channel_data as $k => $val) {
                                 紹介者
                             </a>
                         </li>
+
                     </ul>
 
 
@@ -133,11 +144,12 @@ foreach ($channel_data as $k => $val) {
                     <table class="table">
                         <thead>
                             <tr class="success">
-                                <th>ID</th>
+                                <th>講座開始日</th>
                                 <th>紹介者名</th>
                                 <th>予約名</th>
                                 <th>予約人数</th>
                                 <th>ステータス</th>
+                                <th>申し込み日時</th>
                             </tr>
                         </thead>
 
@@ -145,11 +157,19 @@ foreach ($channel_data as $k => $val) {
                             <?php foreach ($data as $k => $val) : ?>
                                 <?php if ($val['status'] != 2) : ?>
                                     <tr>
-                                        <td><?php echo $val['id']; ?></td>
-                                        <td><a href="/management/introducer/detail?id=<?php echo $val['introducer_id'];?>"><?php echo $val['name']; ?></a></td>
-                                        <td><?php echo $val['reservation_name']; ?></td>
+                                        <td><?php echo $val['start_date_format'];?></td>
+                                        <td><a href="/management/introducer/detail?id=<?php echo $val['introducer_id']; ?>"><?php echo $val['name']; ?></a></td>
+                                        <td><a href="/management/entry/detail/?id=<?php echo $val['entry_id']; ?>"><?php echo $val['reservation_name']; ?></a></td>
                                         <td><?php echo $val['count']; ?></td>
-                                        <td>講座終了後</td>
+
+                                        <?php if ($val['payment'] == $val['price']) : ?>
+                                            <td><button type="button" class="btn btn-success">正常処理</button></td>
+                                        <?php elseif($val['payment'] > $val['price']) : ?>
+                                            <td><button type="button" class="btn btn-warning">過払いあり</button></td>
+                                        <?php else:?>
+                                            <td><button type="button" class="btn btn-warning">未払い</button></td>
+                                        <?php endif; ?>
+                                        <td><?php echo $val['created_at']; ?></td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>

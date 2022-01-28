@@ -24,7 +24,7 @@ $inquiry_content .= $_POST["question"] . "\n";
 $inquiry_content .= "-----------------";
 
 //2通のメールのそれぞれの本文
-$mail_body_1 = "「グッドラーニング！」メールフォームからお問い合わせがありました。\n\n\n";
+$mail_body_1 = "「グッドラーニング！」(トラック)メールフォームからお問い合わせがありました。\n\n\n";
 $mail_body_1 .= $inquiry_content;
 
 $mail_body_2 = "「グッドラーニング！」メールフォームから\n";
@@ -76,11 +76,11 @@ $mailsousin_2 = mb_send_mail($mail_to_2, $mail_subject_2, $mail_body_2, $mail_he
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="http://localhost:8888/truck/contact/"
+      content="https://promote.good-learning.jp/truck/contact/"
     />
     <meta
       property="og:image"
-      content="http://localhost:8888/truck/common/img/shared/og_image.jpg"
+      content="https://promote.good-learning.jp/truck/common/img/shared/og_image.jpg"
     />
     <meta
       property="og:site_name"
@@ -92,7 +92,7 @@ $mailsousin_2 = mb_send_mail($mail_to_2, $mail_subject_2, $mail_body_2, $mail_he
     />
     <link
       rel="canonical"
-      href="http://localhost:8888/truck/contact/"
+      href="https://promote.good-learning.jp/truck/contact/"
     />
     <link rel="stylesheet" href="https://use.typekit.net/hcg7pyj.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -134,6 +134,13 @@ foreach ($entry_data as $k => $entry) {
                 紹介者
               </a>
             </li>
+            <li>
+              <a class="nav-link" href="/management/cost/">
+                <span data-feather="file"></span>
+                <!-- Reports -->
+                請求
+              </a>
+            </li>
           </ul>
 
 

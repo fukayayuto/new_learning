@@ -1,6 +1,7 @@
 <?php
 require "../db/adopt.php";
-$data = getAdopt();
+$place = 1;
+$data = getAdopt($place);
 ?>
 <!DOCTYPE html>
 <html lang="ja">

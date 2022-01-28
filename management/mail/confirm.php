@@ -5,7 +5,11 @@ require_once "../db/accounts.php";
 
 $account_id_list = $_POST['account_id'];
 $confirm_flg = $_POST['confirm_flg'];
+$claim_flg = $_POST['claim_flg'];
+$certificate = $_POST['certificate'];
 $entry_id = $_POST['entry_id'];
+
+
 $account_list = '';
 $data = array();
 
@@ -108,10 +112,11 @@ $mail_text_list = explode("\n", $mail_text_list);
 
                 <div class="container">
 
-                    <form action="store.php" method="post" id="form">
-                    <input type="hidden" id="confirm_flg" name="confirm_flg" value="<?php echo $confirm_flg;?>">
-                    <input type="hidden" id="entry_id" name="entry_id" value="<?php echo $entry_id;?>">
-
+                    <form action="store.php" method="post" id="form" enctype="multipart/form-data">
+                        <input type="hidden" id="confirm_flg" name="confirm_flg" value="<?php echo $confirm_flg; ?>">
+                        <input type="hidden" id="entry_id" name="entry_id" value="<?php echo $entry_id; ?>">
+                        <input type="hidden" id="claim_flg" name="claim_flg" value="<?php echo $claim_flg; ?>">
+                        <input type="hidden" id="certificate" name="certificate" value="<?php echo $certificate; ?>">
 
                         <?php foreach ($data as $val) : ?>
                             <input type="hidden" name="account_id[]" id="account_id[]" value="<?php echo $val['account_id']; ?> ">
@@ -126,7 +131,7 @@ $mail_text_list = explode("\n", $mail_text_list);
                         </div>
 
                         <div class="form-group">
-                            <label　class="border-bottom">件名 : <?php echo $title; ?></label>
+                            <label class="border-bottom">件名 : <?php echo $title; ?></label>
                         </div>
 
                         <div class="form-group">
@@ -139,8 +144,19 @@ $mail_text_list = explode("\n", $mail_text_list);
                             </p>
                         </div>
 
+                        <div class="form-group">
+                            <label>添付ファイル</label><br>
+                            <input type="file" name="file_1[]" id="file_1[]" class="form-control">
+                        </div>
+                        <div id="file_add">
 
+                        </div>
+                        <div class="text-right">
+                            <button class="btn btn-secondary" type="button" id="add">追加</button>
+                        </div>
 
+                        <br>
+                        <br>
                         <!-- <p　style="white-space: pre-wrap;"><?php echo $mail_text; ?></p><br> -->
 
                         <button type="submit" class="btn btn-primary">送信する</button>
@@ -182,6 +198,15 @@ $mail_text_list = explode("\n", $mail_text_list);
                 } else {
                     return false;
                 }
+            });
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#add").click(function() {
+
+                $("#file_add").append('<input type="file" style=" margin-top: 1em;" class="form-control" name="file_1[]" value="">')
+
             });
         });
     </script>

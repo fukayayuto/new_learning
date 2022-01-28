@@ -7,10 +7,10 @@ $title = $_POST['title'];
 $text = $_POST['text'];
 $id = $_POST['id'];
 $method = $_POST['method'];
+$input_flg = $_POST['input_flg'];
 
 
-
-$res = updateMailTemplate($title,$text,$method,$id);
+$res = updateMailTemplate($title,$text,$method,$input_flg,$id);
 if(!$res){
     $res = 1;
 }else{

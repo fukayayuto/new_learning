@@ -155,9 +155,9 @@ if (!empty($_GET['id'])) {
 				<div class="rBox">
 					<p class="btn">
 						<?php if (!empty($introducer_id)) : ?>
-							<a href="/truck/price/tmp.php?id=<?php echo $introducer_id; ?>#application">WEBからのご予約はこちらから</a>
+							<a href="/truck/price/?id=<?php echo $introducer_id; ?>#application">WEBからのご予約はこちらから</a>
 						<?php else : ?>
-							<a href="/truck/price/tmp.php#application">WEBからのご予約はこちらから</a>
+							<a href="/truck/price/#application">WEBからのご予約はこちらから</a>
 						<?php endif; ?>
 					</p>
 					<p class="tel">
@@ -227,9 +227,9 @@ if (!empty($_GET['id'])) {
 				<div class="rBox">
 					<p class="btn">
 						<?php if (!empty($introducer_id)) : ?>
-							<a href="/truck/price/tmp.php?id=<?php echo $introducer_id; ?>#application">WEBからのご予約はこちらから</a>
+							<a href="/truck/price/?id=<?php echo $introducer_id; ?>#application">WEBからのご予約はこちらから</a>
 						<?php else : ?>
-							<a href="/truck/price/tmp.php#application">WEBからのご予約はこちらから</a>
+							<a href="/truck/price/#application">WEBからのご予約はこちらから</a>
 						<?php endif; ?>
 
 					</p>

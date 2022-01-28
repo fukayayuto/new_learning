@@ -8,7 +8,7 @@ require_once "../../db/accounts.php";
 require_once "../../db/name_lists.php";
 
 if (empty($_GET['id'])) {
-    header('Location: http://localhost:8888/management/entry');
+    header('Location: https://promote.good-learning.jp/management/entry');
 }
 if (!empty($_GET['res'])) {
     $res = $_GET['res'];
@@ -20,7 +20,7 @@ $entry_data = selectEntry($entry_id);
 $reservation_data = getReservation($entry_data['reservation_id']);
 
 $reserve_data = getReservatinData($reservation_data['place']);
-$progress = $reserve_data['progress'];
+$progress = (int) $reserve_data['progress'] - 1;
 
 $reservation_id = $reservation_data['id'];
 $reservation_name = $reserve_data['name'];
@@ -47,8 +47,25 @@ $created_at .= '(' . $created_at_week . ') ';
 $created_at .= $tmp_created_at->format('G:i');
 
 $status = $entry_data['status'];
+$payment =  $entry_data['payment'];
+if (!empty($entry_data['payment_date'])) {
+    $tmp_payment_date = new DateTime($entry_data['payment_date']);
+    $payment_date = $tmp_payment_date->format('Y年n月j日 G:i');
+} else {
+    $payment_date = '入金実績なし';
+}
+
+$payment_flg = $entry_data['payment_flg'];
 $confirm_flg = $entry_data['confirm_flg'];
+$claim_flg = $entry_data['claim_flg'];
 $count = $entry_data['count'];
+$certificate = $entry_data['certificate'];
+
+$today = date('Y-m-d');
+$end_date_format = $tmp_end_date->format('Y-m-d');
+
+$price = $reserve_data['price'] * $count;
+
 $name_list = $entry_data['name_1'];
 if (!empty($entry_data['name_2'])) {
     $name_list .= ' , ' . $entry_data['name_2'];
@@ -207,49 +224,123 @@ $memo = $account[0]['memo'];
                             <thead>
                                 <tr>
                                     <th scope="col">予約情報</th>
-                                    <th scope="col"><button class="btn btn-primary" type="submit">申し込み内容を変更する</button></th>
+                                    <th></th>
+                                    <th></th>
+                                    <!-- <th scope="col"><button class="btn btn-primary" type="submit">申し込み内容を変更する</button></th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>講座名</td>
-                                    <td><?php echo $reservation_name; ?></td>
+                                    <td colspan="2"><?php echo $reservation_name; ?></td>
                                 </tr>
                                 <tr>
                                     <td>講座期間</td>
                                     <td><?php echo $start_date . '〜' . $end_date; ?></td>
+                                    <td><button class="btn-secondary ml-10" type="button" id="reschedule_btn">日程を変更する</button></td>
                                 </tr>
                                 <tr>
                                     <td>予約人数</td>
                                     <td><?php echo $count; ?></td>
+                                    <td><button class="btn-secondary ml-10" type="button" id="rebook_btn">予約人数、予約者を編集する</button></td>
                                 </tr>
                                 <tr>
                                     <td>予約者氏名</td>
                                     <td><?php echo $name_list; ?></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>ステータス</td>
                                     <?php if ($status == 0) : ?>
-                                        <td><button type="button" class="btn btn-warning">未確定</button></td>
+                                        <td><button type="button" class="btn-warning">未確定</button></td>
                                     <?php elseif ($status == 1) : ?>
                                         <td>
-                                            <button type="button" class="btn btn-success">確定</button><br>
-                                            <?php if ($confirm_flg == 0) : ?>
-                                                <a href="/management/mail/form.php?confirm=<?php echo $entry_id; ?>"><span data-feather="mail"></span>確定メールを送信する</a>
-                                            <?php else : ?>
-                                                <span data-feather="mail"></span>確定メール送信済み
-
-                                            <?php endif; ?>
+                                            <button type="button" class="btn-success">確定</button>
                                         </td>
                                     <?php elseif ($status == 2) : ?>
                                         <td><button type="button" class="btn btn-danger">キャンセル</button></td>
                                     <?php endif; ?>
+                                    <td><button class="btn-secondary ml-10" type="button" id="status_btn">ステータスを変更する</button></td>
                                 </tr>
+
+                                <?php if ($status == 1) : ?>
+                                    <tr>
+                                        <td>確定メール</td>
+                                        <td>
+                                            <?php if ($confirm_flg == 0) : ?>
+                                                <a href="/management/mail/form.php?confirm=<?php echo $entry_id; ?>">
+                                                    <button class="btn-info" type="button">確定をメール送信する</button>
+                                                </a>
+                                            <?php else : ?>
+                                                確定メール送信済み
+                                            <?php endif; ?>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                <?php endif; ?>
+
+                                <tr>
+                                    <td>請求金額</td>
+                                    <td><?php echo number_format($price); ?>円</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>入金金額</td>
+                                    <td><?php echo number_format($payment); ?>円</td>
+                                    <td><button class="btn-secondary ml-10" type="button" id="payment_btn">入金登録をする</button></td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>入金日</td>
+                                    <td><?php echo $payment_date; ?></td>
+                                    <td></td>
+
+                                </tr>
+
+                                <!-- <tr>
+                                    <td>入金ステータス</td>
+                                    <?php if ($price > $payment) : ?>
+                                        <td><button type="button" class="btn btn-warning">未入金</button>
+
+                                            <?php if ($status == 1) : ?>
+                                                <?php if ($claim_flg == 0) : ?>
+                                                    <a href="/management/mail/form.php?claim=<?php echo $entry_id; ?>"><span data-feather="mail"></span>請求メールを送信する</a>
+                                                <?php else : ?>
+                                                    <span data-feather="mail"></span>請求メール送信済み
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </td>
+
+                                    <?php elseif ($price == $payment) : ?>
+                                        <td><button type="button" class="btn-success">入金済み</button></td>
+                                    <?php else : ?>
+                                        <td><button type="button" class="btn-danger">過払いあり</button></td>
+                                    <?php endif; ?>
+                                    <td></td>
+                                </tr> -->
+
+                                <?php if ($end_date_format < $today && $status == 1) : ?>
+                                    <tr>
+                                        <td>指導記録簿</td>
+                                        <td>
+                                            <?php if ($certificate == 0) : ?>
+                                                <a href="/management/mail/form.php?certificate=<?php echo $entry_id; ?>"><button type="button" class="btn-info">指導記録簿を送付する</button></a>
+                                            <?php else : ?>
+                                                <span data-feather="mail"></span>送付済み
+                                            <?php endif; ?>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                <?php endif; ?>
+
                                 <tr>
                                     <td>予約申込日</td>
                                     <td><?php echo $created_at; ?></td>
                                     <td></td>
                                 </tr>
+
+
 
                             </tbody>
                         </form>
@@ -366,32 +457,71 @@ $memo = $account[0]['memo'];
     </script>
 
     <script>
-        // 確認ボタンをクリックするとイベント発動
-        $('#span_click').click(function() {
-            alert('uu');
+        var entry_id = <?php echo $entry_id; ?>;
+        // 入金登録ボタンをクリックするとイベント発動
+        $('#payment_btn').click(function() {
 
             // もしキャンセルをクリックしたら
-            if (!confirm('確定メールを送信しますか？')) {
+            if (!confirm('入金登録をしますか？')) {
 
                 // submitボタンの効果をキャンセルし、クリックしても何も起きない
                 return false;
 
                 // 「OK」をクリックした際の処理を記述
             } else {
-                const entry_id = <?php echo $entry_id; ?>;
-                $.ajax({
-                    url: 'send_confim.php',
-                    type: 'POST',
-                    data: {
-                        'entry_id': entry_id
-                    }
-                }).done(data => {
-                    swal('確定メールを送信しました。');
-                }).fail(data => {
-                    swal('確定メールの送信に失敗しました。');
-                }).always(data => {
+                window.location.href = '/management/entry/detail/payment_edit.php?id=' + entry_id;
 
-                });
+            }
+        });
+    </script>
+
+    <script>
+        var entry_id = <?php echo $entry_id; ?>;
+        // ステータス変更をクリックするとイベント発動
+        $('#status_btn').click(function() {
+
+            // もしキャンセルをクリックしたら
+            if (!confirm('ステータスの変更をしますか？')) {
+                return false;
+
+                // 「OK」をクリックした際の処理を記述
+            } else {
+                window.location.href = '/management/entry/detail/status_edit.php?id=' + entry_id;
+
+            }
+        });
+    </script>
+
+    <script>
+        var entry_id = <?php echo $entry_id; ?>;
+        // 人数変更をクリックするとイベント発動
+        $('#rebook_btn').click(function() {
+
+            // もしキャンセルをクリックしたら
+            if (!confirm('人数、予約者の変更をしますか？')) {
+                return false;
+
+                // 「OK」をクリックした際の処理を記述
+            } else {
+                window.location.href = '/management/entry/detail/rebook.php?id=' + entry_id;
+
+            }
+        });
+    </script>
+
+    <script>
+        var entry_id = <?php echo $entry_id; ?>;
+        // 講座変更変更をクリックするとイベント発動
+        $('#reschedule_btn').click(function() {
+
+            // もしキャンセルをクリックしたら
+            if (!confirm('講座日程をしますか？')) {
+                return false;
+
+                // 「OK」をクリックした際の処理を記述
+            } else {
+                window.location.href = '/management/reserve/reschedule/?id=' + entry_id;
+
             }
         });
     </script>

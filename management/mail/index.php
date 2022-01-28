@@ -119,11 +119,7 @@ foreach ($disp_data as $k => $val) {
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.css' type="text/css" rel='stylesheet' />
-    <link href='http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.css' type="text/css" rel='stylesheet' />
 
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.js"></script>
-    <script src="http://localhost:8888/management/fullcalendar-5.10.1/lib/main.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 </head>
@@ -203,61 +199,65 @@ foreach ($disp_data as $k => $val) {
                         <button type="submit" class="btn btn-secondary">検索</button>
                     </form>
 
-                    <table class="table">
-                        <thead>
-                            <tr class="success">
-                                <td>ID</td>
-                                <td>種類</td>
-                                <td>日付</td>
-                                <td>宛先</td>
-                                <td>本文</td>
-                            </tr>
-                        </thead>
+                    <form action="/management/mail/delete.php" method="post" id="delete">
+                        <div class="text-right" id="delete_button">
+                            <button type="submit" class="btn-danger" id="del_btn">チェック項目の削除</button>
+                        </div>
 
-                        <tbody>
-                            <?php foreach ($data as $k => $val) : ?>
+                        <table class="table">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td><?php echo $val['id']; ?></td>
-                                    <td>メール</td>
-                                    <td><?php echo $val['created_at']; ?></td>
-                                    <td><a href="/management/mail/adress.php?id=<?php echo $val['adress_id']; ?>"><?php echo $val['account_list']; ?></a></td>
-                                    <td><a href="/management/mail/detail/?id=<?php echo $val['content_id']; ?>"><?php echo $val['title']; ?></a></td>
+                                    <td></td>
+                                    <td>日付</td>
+                                    <td>宛先</td>
+                                    <td>本文</td>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($data as $k => $val) : ?>
+                                    <tr>
+                                        <td><input type="checkbox" name="select[]" class="chk" id="select[]" value="<?php echo $val['id']; ?>"></td>
+                                        <td style="width: 20%;"><?php echo $val['created_at']; ?></td>
+                                        <td style="width: 30%;"><a href="/management/mail/adress.php?id=<?php echo $val['adress_id']; ?>"><?php echo $val['account_list']; ?></a></td>
+                                        <td style="width: 50%;"><a href="/management/mail/detail/?id=<?php echo $val['content_id']; ?>&mail=<?php echo $val['id']; ?>"><?php echo $val['title']; ?></a></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
 
 
                 <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <?php if ($previous == 0) : ?>
+                    <ul class="pagination">
+                        <?php if ($previous == 0) : ?>
+                        <?php else : ?>
+                            <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $previous; ?>">Previous</a></li>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $max_page; $i++) : ?>
+                            <?php if ($i != $now) : ?>
+                                <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
                             <?php else : ?>
-                                <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $previous; ?>">Previous</a></li>
-                            <?php endif; ?>
-                            <?php for ($i = 1; $i <= $max_page; $i++) : ?>
-                                <?php if ($i != $now) : ?>
-                                    <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                                <?php else : ?>
-                                    <li class="page-item"><a class="page-link"><?php echo $now; ?></a></li>
-
-                                <?php endif; ?>
-                            <?php endfor; ?>
-                            <?php if ($next > $max_page) : ?>
-                            <?php else : ?>
-                                <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $next; ?>">Next</a></li>
+                                <li class="page-item"><a class="page-link"><?php echo $now; ?></a></li>
 
                             <?php endif; ?>
-                        </ul>
-                    </nav>
+                        <?php endfor; ?>
+                        <?php if ($next > $max_page) : ?>
+                        <?php else : ?>
+                            <li class="page-item"><a class="page-link" href="/management/mail/?page=<?php echo $next; ?>">Next</a></li>
+
+                        <?php endif; ?>
+                    </ul>
+                </nav>
 
 
             </main>
 
             <footer class="footer mt-auto py-3">
-                    <div class="container">
-                        <span class="text-muted"><br></span>
-                    </div>
+                <div class="container">
+                    <span class="text-muted"><br></span>
+                </div>
             </footer>
         </div>
     </div>
@@ -302,8 +302,48 @@ foreach ($disp_data as $k => $val) {
             if (res == 4) {
                 swal('メール履歴の登録に失敗しました');
             }
+            if (res == 7) {
+                swal('メール履歴を削除しました');
+            }
+            if (res == 6) {
+                swal('メール履歴を削除に失敗しました');
+            }
+            if (res == 9) {
+                swal('メール履歴を削除しました');
+            }
+            if (res == 8) {
+                swal('メール履歴を削除に失敗しました');
+            }
 
 
+
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#delete").submit(function() {
+                if (window.confirm('チェックした項目を削除してもよろしいでしょうか？')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(function() {
+            $('#del_btn').prop("disabled", true);
+            $("input[type='checkbox']").on('change', function() {
+                // チェックされているチェックボックスの数
+                if ($(".chk:checked").length > 0) {
+                    // ボタン有効
+                    $("#del_btn").prop("disabled", false);
+                } else {
+                    // ボタン無効
+                    $("#del_btn").prop("disabled", true);
+                }
+            });
         });
     </script>
 </body>

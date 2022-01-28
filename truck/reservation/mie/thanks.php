@@ -8,6 +8,7 @@ require "../../db/accounts.php";
 require "../../db/mail.php"; 
 require "../../db/mail_template.php"; 
 require "../../db/name_lists.php"; 
+require_once "../../db/introduce.php";
 
 if(!empty($_SESSION['flg'])){
   header('Location: http://localhost:8888/truck/price/mie');
@@ -67,6 +68,7 @@ if(empty($_SESSION["flg"])){
   $company_name = $_POST['company_name'];
   $phone = $_POST['phone'];
   $sales_office = $_POST['sales_office'];
+  $introducer_id = $_POST['introducer_id'];
 
   $account_id = accountStore($email,$company_name,$phone,$sales_office);
 
@@ -82,10 +84,16 @@ if(empty($_SESSION["flg"])){
 
   $count = $_POST['count'];
 
-  $res = entryStore($account_id,$reservation_id,$count,$name_1,$name_2,$name_3,$name_4,$name_5);
+  $entry_id = entryStore($account_id,$reservation_id,$count,$name_1,$name_2,$name_3,$name_4,$name_5);
+
+
+  if($introducer_id != 0){
+    $res = channelStore($introducer_id,$entry_id);
+  }
 
   if(!$res){
-    header('Location: http://localhost:8888/truck/price/mie/?res=1');
+    die('uu');
+    // header('Location: http://localhost:8888/truck/price/mie/?res=1');
     exit();
 
   }
@@ -166,7 +174,7 @@ if(empty($_SESSION["flg"])){
 
 
   //メールの作成
-  $mail_to_2	= "yuto.fukaya@cab-station.com";
+  $mail_to_2	= "icts01@cab-station.com";
   $mail_subject_2	= "【グッドラーニング】予約確認メール";
   $mail_header_2	= "from:" . $mail ;
 
@@ -177,7 +185,7 @@ if(empty($_SESSION["flg"])){
 
 
   //メールの作成
-  $mail_to	= "yuto.fukaya@cab-station.com";
+  $mail_to	= "icts01@cab-station.com";
   $mail_subject	= "【グッドラーニング】予約確認メール";
   $mail_header	= "from:" . $mail ;
 
@@ -214,6 +222,7 @@ if(empty($_SESSION["flg"])){
 
 $_SESSION['flg'] = 1;
 
+die('uu');
 
 ?>
 

@@ -2,12 +2,12 @@
 
 require_once "db.php"; 
 
-function getAdopt(){
+function getAdopt($place){
     
     $pdo = dbConect();
 
-
-    $stmt = $pdo->prepare("SELECT * FROM adopt ORDER BY id DESC");
+    $stmt = $pdo->prepare("SELECT * FROM adopt WHERE place = :place ORDER BY id DESC");
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
     $res = $stmt->execute();
 
     if( $res ) {
@@ -18,16 +18,17 @@ function getAdopt(){
     return $data;
 }
 
-function adoptStore($company_name){
+function adoptStore($company_name,$place){
     
     $pdo = dbConect();
 
     $stmt = $pdo->prepare("INSERT INTO adopt (
-        company_name
+        company_name, place
     ) VALUES (
-       :company_name
+       :company_name, :place
      )");
     $stmt->bindValue(':company_name', $company_name, PDO::PARAM_STR);
+    $stmt->bindValue(':place', $place, PDO::PARAM_INT);
     $res = $stmt->execute();
     
     $pdo = null;

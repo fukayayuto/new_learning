@@ -26,12 +26,16 @@ $created_at = $tmp_created_at->format('Y年n月j日');
 
 $tmp_updated_at = new DateTime($introducer_data['updated_at']);
 $updated_at = $tmp_updated_at->format('Y年n月j日');
-
+$today = date('Y-m-d');
 
 $data = array();
 $total_price = 0;
 $total_reserve_count = 0;
 $total_user_count = 0;
+$total_complete_count = 0;
+$total_stay_count = 0;
+$total_ok_count = 0;
+
 
 $channel_data = getChannelFromIntroducerId($introducer_id);
 foreach ($channel_data as $k => $val) {
@@ -43,16 +47,18 @@ foreach ($channel_data as $k => $val) {
 
     $tmp['status'] = $entry_data['status'];
 
-    if ($entry_data['status'] != 2) {
-        $total_reserve_count++;
-        $total_user_count +=  $entry_data['count'];
+    if($tmp['status'] != 1){
+        continue;
     }
 
     $tmp['count'] = $entry_data['count'];
     $reservation_id = $entry_data['reservation_id'];
 
+    $tmp['payment'] = $entry_data['payment'];
+    $payment = $entry_data['payment'];
+
     $tmp_date = new DateTime($entry_data['created_at']);
-    $tmp['created_at'] = $tmp_date->format('Y年m月d日 G:i');
+    $tmp['created_at'] = $tmp_date->format('Y年m月d日');
 
     $account_id = $entry_data['account_id'];
     $account = getAccount($account_id);
@@ -61,6 +67,13 @@ foreach ($channel_data as $k => $val) {
 
     $reservation_data = getReservation($reservation_id);
     $place = $reservation_data['place'];
+    $tmp['start_date'] = $reservation_data['start_date'];
+
+    $tmp_date = new DateTime($reservation_data['start_date']);
+    $tmp['start_date_format'] = $tmp_date->format('Y年m月d日');
+
+    $tmp['entry_id'] = $entry_data['id'];
+
 
     $reserve_data = getReservatinData($place);
 
@@ -68,11 +81,22 @@ foreach ($channel_data as $k => $val) {
     $tmp['reservation_name'] = mb_substr($tmp['reservation_name'], 0, 16);
 
     $price = $reserve_data['price'];
+    $price = $price * $tmp['count'];
+    $tmp['price'] = $price;
 
-    if ($entry_data['status'] != 2) {
-        $total_price += $entry_data['count'] * $price;
+
+    $total_reserve_count++;
+    $total_user_count +=  $entry_data['count'];
+    
+    if($tmp['start_date'] < $today){
+        $total_complete_count++;
+        if($price == $tmp['payment']){
+            $total_ok_count++;
+            $total_price += $price;
+        }
+    }else{
+        $total_stay_count++;
     }
-
     $data[$k] = $tmp;
 }
 
@@ -196,9 +220,13 @@ foreach ($channel_data as $k => $val) {
 
                 <div class="container">
                     <table class="table">
+
                         <thead>
                             <tr>
-                                <th>申し込みID</th>
+                                <th>実施済み</th>
+                            </tr>
+                            <tr>
+                                <th>講座開始日</th>
                                 <th>講座名</th>
                                 <th>予約会社名</th>
                                 <th>予約人数</th>
@@ -206,41 +234,104 @@ foreach ($channel_data as $k => $val) {
                                 <th>申し込み日時</th>
                             </tr>
                         </thead>
-                        </thead>
 
                         <tbody>
                             <?php if (!empty($data)) : ?>
                                 <?php foreach ($data as $val) : ?>
-                                    <tr>
-                                        <td><?php echo $val['id']; ?></td>
-                                        <td><?php echo $val['reservation_name']; ?></td>
-                                        <td><?php echo $val['company_name']; ?></td>
-                                        <td><?php echo $val['count']; ?></td>
-                                        <td><?php echo $val['status']; ?></td>
-                                        <td><?php echo $val['created_at']; ?></td>
-                                    </tr>
+                                    <?php if ($val['start_date'] < $today) : ?>
+                                        <?php if ($val['status'] == 1) : ?>
+                                            <tr>
+                                                <td><?php echo $val['start_date_format']; ?></td>
+                                                <td><a href="/management/entry/detail/?id=<?php echo $val['entry_id']; ?>"><?php echo $val['reservation_name']; ?></a></td>
+                                                <td><?php echo $val['company_name']; ?></td>
+                                                <td><?php echo $val['count']; ?></td>
+
+                                                <?php if ($val['payment'] == $val['price']) : ?>
+                                                    <td><button type="button" class="btn btn-success">正常処理</button></td>
+                                                <?php elseif ($val['payment'] > $val['price']) : ?>
+                                                    <td><button type="button" class="btn btn-warning">過払いあり</button></td>
+                                                <?php else : ?>
+                                                    <td><button type="button" class="btn btn-warning">未払い</button></td>
+                                                <?php endif; ?>
+
+                                                <td><?php echo $val['created_at']; ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <th>紹介実績がありません。</th>
-                                </tr>
                             <?php endif; ?>
                         </tbody>
 
                         <thead>
                             <tr>
-                                <th>累計</th>
+                                <th>未実施</th>
+                            </tr>
+                            <tr>
+                                <th>講座開始日</th>
+                                <th>講座名</th>
+                                <th>予約会社名</th>
+                                <th>予約人数</th>
+                                <th>ステータス</th>
+                                <th>申し込み日時</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php if (!empty($data)) : ?>
+                                <?php foreach ($data as $val) : ?>
+                                    <?php if ($val['start_date'] > $today) : ?>
+                                        <?php if ($val['status'] == 1) : ?>
+                                            <tr>
+                                                <td><?php echo $val['start_date_format']; ?></td>
+                                                <td><a href="/management/entry/detail/?id=<?php echo $val['entry_id']; ?>"><?php echo $val['reservation_name']; ?></a></td>
+                                                <td><?php echo $val['company_name']; ?></td>
+                                                <td><?php echo $val['count']; ?></td>
+
+
+                                                <?php if ($val['payment'] == $val['price']) : ?>
+                                                    <td><button type="button" class="btn btn-success">正常処理</button></td>
+                                                <?php elseif ($val['payment'] > $val['price']) : ?>
+                                                    <td><button type="button" class="btn btn-warning">過払いあり</button></td>
+                                                <?php else : ?>
+                                                    <td><button type="button" class="btn btn-warning">未払い</button></td>
+                                                <?php endif; ?>
+
+                                                <td><?php echo $val['created_at']; ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+
+                        </tbody>
+
+                        <?php if (empty($data)) : ?>
+                            <tbody>
+                                紹介実績なし
+                            </tbody>
+                        <?php endif; ?>
+
+                        <thead>
+                            <tr>
+                                <th>集計</th>
+                            </tr>
+                            <tr>
                                 <th>講座数</th>
                                 <th>申し込み人数</th>
+                                <th>実施済み</th>
+                                <th>未実施</th>
+                                <th>正常処理分</th>
                                 <th>合計金額</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td><?php echo $total_reserve_count; ?></td>
-                                <td><?php echo $total_user_count; ?></td>
-                                <td><?php echo $total_price; ?>円</td>
+                                <td><?php echo $total_reserve_count; ?>件</td>
+                                <td><?php echo $total_user_count; ?>人</td>
+                                <td><?php echo $total_complete_count; ?>件</td>
+                                <td><?php echo $total_stay_count; ?>件</td>
+                                <td><?php echo $total_ok_count; ?>件</td>
+                                <td><?php echo number_format($total_price); ?>円</td>
                             </tr>
                         </tbody>
                     </table>
